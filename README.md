@@ -1,2 +1,2 @@
-# SMApp
-School Management App
+# SMMMMMMAppiii
+This testing app
