@@ -8,7 +8,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using SMApp.Web.Models;
+using SMApp.Web.LIB.Models.SchoolEN;
+using SMApp.Web.LIB.ViewModels;
+using SMApp.Web.LIB.ViewModels.AccountVM;
 
 namespace SMApp.Web.Controllers
 {

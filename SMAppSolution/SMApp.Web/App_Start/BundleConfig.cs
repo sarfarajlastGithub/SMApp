@@ -11,6 +11,15 @@ namespace SMApp.Web
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
+            //For full Layout
+            bundles.Add(new ScriptBundle("~/bundles/fulljquery").Include(
+                        "~/Scripts/jquery-{version}.min.js",
+                        "~/Scripts/bootstrap.min.js",
+                        "~/Scripts/metisMenu.min.js",
+                        "~/Scripts/TemplateJS/sb-admin-2.min.js"));
+
+
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
@@ -26,6 +35,12 @@ namespace SMApp.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            //for template purpose
+            bundles.Add(new StyleBundle("~/Content/fullcss").Include(
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/metisMenu.min.css",
+                      "~/Content/TemplateCss/sb-admin-2.css",
+                      "~/Content/font-awesome.min.css"));
         }
     }
 }

@@ -5,7 +5,8 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using SMApp.Web.Models;
+using SMApp.Web.LIB.Context;
+using SMApp.Web.LIB.Models.SchoolEN;
 
 namespace SMApp.Web
 {

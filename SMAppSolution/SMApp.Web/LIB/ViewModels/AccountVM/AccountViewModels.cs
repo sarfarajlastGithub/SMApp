@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SMApp.Web.Models
+namespace SMApp.Web.LIB.ViewModels.AccountVM
 {
     public class ExternalLoginConfirmationViewModel
     {

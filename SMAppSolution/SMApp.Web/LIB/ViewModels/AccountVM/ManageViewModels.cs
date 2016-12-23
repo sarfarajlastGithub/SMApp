@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace SMApp.Web.Models
+namespace SMApp.Web.LIB.ViewModels.AccountVM
 {
     public class IndexViewModel
     {
