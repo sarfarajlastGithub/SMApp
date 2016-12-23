@@ -7,13 +7,13 @@ namespace SMApp.Web.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Initialmodel : IMigrationMetadata
+    public sealed partial class ChangeAppUse : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initialmodel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangeAppUse));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612231707563_Initialmodel"; }
+            get { return "201612232315084_ChangeAppUse"; }
         }
         
         string IMigrationMetadata.Source

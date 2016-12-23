@@ -190,11 +190,30 @@
     </Compile>
     <Compile Include="LIB\Context\AppDbContext.cs" />
     <Compile Include="LIB\Models\SchoolEN\ApplicationUser.cs" />
+    <Compile Include="LIB\Models\SchoolEN\ClassAndSection.cs" />
+    <Compile Include="LIB\Models\SchoolEN\SAddress.cs" />
+    <Compile Include="LIB\Models\SchoolEN\TenureHoliday.cs" />
+    <Compile Include="LIB\Models\SchoolEN\TenureTime.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\AccountViewModels.cs" />
+    <Compile Include="LIB\ViewModels\AccountVM\LoginViewModel.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\ManageViewModels.cs" />
-    <Compile Include="Migrations\201612231707563_Initialmodel.cs" />
-    <Compile Include="Migrations\201612231707563_Initialmodel.Designer.cs">
-      <DependentUpon>201612231707563_Initialmodel.cs</DependentUpon>
+    <Compile Include="LIB\ViewModels\AccountVM\RegisterViewModel.cs" />
+    <Compile Include="LIB\ViewModels\Enums\City.cs" />
+    <Compile Include="LIB\ViewModels\Enums\Medium.cs" />
+    <Compile Include="LIB\ViewModels\Enums\SBoard.cs" />
+    <Compile Include="LIB\ViewModels\Enums\SchoolFType.cs" />
+    <Compile Include="LIB\ViewModels\Enums\SchoolGType.cs" />
+    <Compile Include="LIB\ViewModels\Enums\SClass.cs" />
+    <Compile Include="LIB\ViewModels\Enums\SSectionEnum.cs" />
+    <Compile Include="LIB\ViewModels\Enums\State.cs" />
+    <Compile Include="LIB\ViewModels\Enums\TenureYear.cs" />
+    <Compile Include="Migrations\201612232303085_InitialAfterSchoolModelAdded.cs" />
+    <Compile Include="Migrations\201612232303085_InitialAfterSchoolModelAdded.Designer.cs">
+      <DependentUpon>201612232303085_InitialAfterSchoolModelAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612232315084_ChangeAppUse.cs" />
+    <Compile Include="Migrations\201612232315084_ChangeAppUse.Designer.cs">
+      <DependentUpon>201612232315084_ChangeAppUse.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -300,8 +319,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612231707563_Initialmodel.resx">
-      <DependentUpon>201612231707563_Initialmodel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612232303085_InitialAfterSchoolModelAdded.resx">
+      <DependentUpon>201612232303085_InitialAfterSchoolModelAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612232315084_ChangeAppUse.resx">
+      <DependentUpon>201612232315084_ChangeAppUse.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,5 +1,3 @@
-using SMApp.Web.LIB.Context;
-
 namespace SMApp.Web.Migrations
 {
     using System;
@@ -7,14 +5,14 @@ namespace SMApp.Web.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AppDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<SMApp.Web.LIB.Context.AppDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(AppDbContext context)
+        protected override void Seed(SMApp.Web.LIB.Context.AppDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
