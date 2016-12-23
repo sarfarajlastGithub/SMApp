@@ -3,16 +3,16 @@ using SMApp.Web.LIB.Models.SchoolEN;
 
 namespace SMApp.Web.LIB.Context
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
+        public AppDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
-        public static ApplicationDbContext Create()
+        public static AppDbContext Create()
         {
-            return new ApplicationDbContext();
+            return new AppDbContext();
         }
     }
 }

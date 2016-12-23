@@ -188,7 +188,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="LIB\Context\ApplicationDbContext.cs" />
+    <Compile Include="LIB\Context\AppDbContext.cs" />
     <Compile Include="LIB\Models\SchoolEN\ApplicationUser.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\AccountViewModels.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\ManageViewModels.cs" />
