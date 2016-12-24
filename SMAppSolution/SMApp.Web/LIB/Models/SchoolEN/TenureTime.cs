@@ -12,7 +12,7 @@ namespace SMApp.Web.LIB.Models.SchoolEN
         public int Id { get; set; }
 
         [Required]
-        public int SchoolProfileId { get; set; }
+        public string SchoolProfileId { get; set; }
 
         public TenureYear TenureYearName { get; set; }
 

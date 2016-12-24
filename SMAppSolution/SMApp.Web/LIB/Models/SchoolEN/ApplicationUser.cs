@@ -22,15 +22,13 @@ namespace SMApp.Web.LIB.Models.SchoolEN
         public SchoolFType SchoolFType { get; set; }
         public SchoolGType SchoolGType { get; set; }
         public SClass SClass { get; set; }
-        public DateTime RegistarDate { get; set; }
+        public DateTime? RegistarDate { get; set; }
         public bool IsComplete { get; set; }
         public DateTime? LastUpdatedDate { get; set; }
         public string SchoolPhoneNumber { get; set; }
         public DateTime? AnnulDateOfExam { get; set; }
         public Medium Medium { get; set; }
         public DateTime? EstablishedDate { get; set; }
-
-
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

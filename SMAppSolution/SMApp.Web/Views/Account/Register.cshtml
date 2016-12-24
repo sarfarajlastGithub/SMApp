@@ -39,9 +39,9 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.TotalStudents, new {@class = "col-md-2 control-label"})
+            @Html.LabelFor(m => m.TotalStudent, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.TotalStudents, new {@class = "form-control"})
+                @Html.TextBoxFor(m => m.TotalStudent, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
@@ -60,15 +60,15 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.SAddress.City, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.City, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(m => m.SAddress.City, new { @class = "form-control" })
+                @Html.EnumDropDownListFor(m => m.City, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.SAddress.state, new {@class = "col-md-2 control-label"})
+            @Html.LabelFor(m => m.State, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(m => m.SAddress.state, new {@class = "form-control"})
+                @Html.EnumDropDownListFor(m => m.State, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
@@ -89,10 +89,9 @@
             </div>
         </div>
     </div>
-
-
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
 }

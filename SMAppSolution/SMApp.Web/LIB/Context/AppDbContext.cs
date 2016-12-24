@@ -1,3 +1,4 @@
+using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SMApp.Web.LIB.Models.SchoolEN;
 
@@ -14,5 +15,12 @@ namespace SMApp.Web.LIB.Context
         {
             return new AppDbContext();
         }
+        
+        public DbSet<SAddress> SAddresses { get; set; }
+
+        public DbSet<ClassAndSection> ClassAndSection { get; set; }
+
+        public DbSet<TenureTime> TenureTimes { get; set; }
+        
     }
 }

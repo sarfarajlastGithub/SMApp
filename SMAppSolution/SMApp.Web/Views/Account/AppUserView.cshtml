@@ -1,0 +1,128 @@
+﻿@model SMApp.Web.LIB.ViewModels.AccountVM.UpdateViewModel
+
+@{
+    ViewBag.Title = "AppUserView";
+    Layout = "~/Views/Shared/_FullLayout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Profile</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Basic info
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.SchoolName) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.SchoolName)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.Board) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.Board).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.TotalStudent) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.TotalStudent)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.SchoolFType) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.SchoolFType).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.SchoolGType) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.SchoolGType).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.SchoolPhoneNumber) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.SchoolPhoneNumber)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Contact info
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.CpName) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.CpName)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.CpPhone) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.CpPhone)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.AddL1) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.AddL1)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.AddL2) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.AddL2)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.City) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.City).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.State) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.State).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.Pin) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.Pin)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Academic info
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.RegistarDate) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.RegistarDate)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.AnnulDateOfExam) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.AnnulDateOfExam)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.Medium) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.Medium).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.EstablishedDate) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.EstablishedDate)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.Email) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.Email)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Classes and Tenure / Session
+            </div>
+            <div class="panel-body">
+                <a class="btn btn-info" href="/Account/ClassViewAndUpdate">Add Or Update</a>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "UpdateAppUser", new {@class="btn btn-info"}) |
+    <a class="btn btn-info" href="/DashBoard/Index">Back to DashBoard</a>
+</p>

@@ -1,0 +1,68 @@
+﻿@using System.EnterpriseServices
+@model SMApp.Web.LIB.ViewModels.AccountVM.ClassViewAndUpdateModel
+
+<div class="panel panel-default panel-table">
+    <div style="background-color:dodgerblue">
+        <div class="panel-heading bigFont">
+            Selected Class and Section
+        </div>
+    </div>
+    <div class="panel-body panel-border">
+        <div class="panel-heading">
+
+
+            @{
+                bool coma = false;
+            }
+
+            @if (Model.SClassList != null)
+            {
+                <div class="table-responsive" style="height: 249px; overflow-y: auto;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Sections</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var sclass in Model.SClassList)
+                            {
+                                <tr>
+                                    <td>@sclass.Name</td>
+                                    <td class="col-sm-6" style="height: 10px">
+                                        @foreach (var ssec in sclass.ListOfSection)
+                                        {
+                                            @*if (coma)
+                                            {
+                                                <section>,</section>
+                                            }*@
+                                            @ssec.Name
+                                            coma = true;
+                                        }
+                                    </td>
+                                </tr>
+                                coma = false;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+            }
+            else
+            {
+                <div class="col-sm-4">
+                    <label class="control-label">No Class has been Added</label>
+                </div>
+                <div class="col-sm-8">
+                    <label class="control-label">No Section</label>
+                </div>
+                <h4>PLease Add Class and Sections accordingly</h4>
+            }
+
+
+        </div>
+    </div>
+</div>

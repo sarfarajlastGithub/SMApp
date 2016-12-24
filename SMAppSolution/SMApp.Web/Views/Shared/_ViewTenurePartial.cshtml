@@ -1,0 +1,52 @@
+﻿@model SMApp.Web.LIB.ViewModels.AccountVM.ClassViewAndUpdateModel
+
+<div class="panel panel-default panel-table">
+    <div style="background-color:dodgerblue">
+        <div class="panel-heading bigFont">
+            Selected Tenure / Session List
+        </div>
+    </div>
+    <div class="panel-body panel-border">
+        <div class="panel-heading">
+            @if (Model.TenureYearList != null)
+            {
+                <div class="table-responsive" style="height: 249px; overflow-y: auto;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Session</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var tenure in Model.TenureYearList)
+                            {
+                            <tr>
+                                <td>@tenure.TenureYearName</td>
+                                <td>@tenure.TenureStartDate</td>
+                                <td>@tenure.TenureEndDate</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            }
+            else
+            {
+                <div class="col-sm-4">
+                    <label class="control-label">No Class has been Added</label>
+                </div>
+                <div class="col-sm-8">
+                    <label class="control-label">No Section</label>
+                </div>
+                <h4>PLease Add Class and Sections accordingly</h4>
+            }
+
+
+        </div>
+    </div>
+</div>
+

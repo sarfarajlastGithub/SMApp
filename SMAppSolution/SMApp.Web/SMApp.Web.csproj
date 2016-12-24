@@ -183,11 +183,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LIB\BL\Account\SchoolProfile.cs" />
     <Compile Include="LIB\Context\AppDbContext.cs" />
     <Compile Include="LIB\Models\SchoolEN\ApplicationUser.cs" />
     <Compile Include="LIB\Models\SchoolEN\ClassAndSection.cs" />
@@ -195,9 +197,18 @@
     <Compile Include="LIB\Models\SchoolEN\TenureHoliday.cs" />
     <Compile Include="LIB\Models\SchoolEN\TenureTime.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\AccountViewModels.cs" />
+    <Compile Include="LIB\ViewModels\AccountVM\ClassViewAndUpdateModel.cs" />
+    <Compile Include="LIB\ViewModels\AccountVM\GetAppUserInfo.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\LoginViewModel.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\ManageViewModels.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\RegisterViewModel.cs" />
+    <Compile Include="LIB\ViewModels\AccountVM\SClassVM.cs" />
+    <Compile Include="LIB\ViewModels\AccountVM\SSectionVM.cs" />
+    <Compile Include="LIB\ViewModels\AccountVM\TenureTimeVM.cs" />
+    <Compile Include="LIB\ViewModels\AccountVM\TenureViewAndUpdateVM.cs" />
+    <Compile Include="LIB\ViewModels\AccountVM\UpdateViewModel.cs" />
+    <Compile Include="LIB\ViewModels\DashBoardVM.cs" />
+    <Compile Include="LIB\ViewModels\DateTimeConvert.cs" />
     <Compile Include="LIB\ViewModels\Enums\City.cs" />
     <Compile Include="LIB\ViewModels\Enums\Medium.cs" />
     <Compile Include="LIB\ViewModels\Enums\SBoard.cs" />
@@ -207,6 +218,7 @@
     <Compile Include="LIB\ViewModels\Enums\SSectionEnum.cs" />
     <Compile Include="LIB\ViewModels\Enums\State.cs" />
     <Compile Include="LIB\ViewModels\Enums\TenureYear.cs" />
+    <Compile Include="LIB\ViewModels\EnumUtil.cs" />
     <Compile Include="Migrations\201612232303085_InitialAfterSchoolModelAdded.cs" />
     <Compile Include="Migrations\201612232303085_InitialAfterSchoolModelAdded.Designer.cs">
       <DependentUpon>201612232303085_InitialAfterSchoolModelAdded.cs</DependentUpon>
@@ -214,6 +226,30 @@
     <Compile Include="Migrations\201612232315084_ChangeAppUse.cs" />
     <Compile Include="Migrations\201612232315084_ChangeAppUse.Designer.cs">
       <DependentUpon>201612232315084_ChangeAppUse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612241023480_A[[DbContextChanged.cs" />
+    <Compile Include="Migrations\201612241023480_A[[DbContextChanged.Designer.cs">
+      <DependentUpon>201612241023480_A[[DbContextChanged.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612241446084_dbChange.cs" />
+    <Compile Include="Migrations\201612241446084_dbChange.Designer.cs">
+      <DependentUpon>201612241446084_dbChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612241447312_dbChange1.cs" />
+    <Compile Include="Migrations\201612241447312_dbChange1.Designer.cs">
+      <DependentUpon>201612241447312_dbChange1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612241528406_changeDatatime.cs" />
+    <Compile Include="Migrations\201612241528406_changeDatatime.Designer.cs">
+      <DependentUpon>201612241528406_changeDatatime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612241737259_AddClassSectionTbl.cs" />
+    <Compile Include="Migrations\201612241737259_AddClassSectionTbl.Designer.cs">
+      <DependentUpon>201612241737259_AddClassSectionTbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612241921460_AddTenureModel.cs" />
+    <Compile Include="Migrations\201612241921460_AddTenureModel.Designer.cs">
+      <DependentUpon>201612241921460_AddTenureModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -224,12 +260,54 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\metisMenu.css" />
     <Content Include="Content\metisMenu.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\TemplateCss\sb-admin-2.css" />
     <Content Include="Content\TemplateCss\sb-admin-2.min.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -257,6 +335,10 @@
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -309,6 +391,12 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Shared\_FullLayout.cshtml" />
+    <Content Include="Views\Account\UpdateAppUser.cshtml" />
+    <Content Include="Views\DashBoard\Index.cshtml" />
+    <Content Include="Views\Account\AppUserView.cshtml" />
+    <Content Include="Views\Account\ClassViewAndUpdate.cshtml" />
+    <Content Include="Views\Shared\_AddClassPartial.cshtml" />
+    <Content Include="Views\Shared\_ViewTenurePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -324,6 +412,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612232315084_ChangeAppUse.resx">
       <DependentUpon>201612232315084_ChangeAppUse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612241023480_A[[DbContextChanged.resx">
+      <DependentUpon>201612241023480_A[[DbContextChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612241446084_dbChange.resx">
+      <DependentUpon>201612241446084_dbChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612241447312_dbChange1.resx">
+      <DependentUpon>201612241447312_dbChange1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612241528406_changeDatatime.resx">
+      <DependentUpon>201612241528406_changeDatatime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612241737259_AddClassSectionTbl.resx">
+      <DependentUpon>201612241737259_AddClassSectionTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612241921460_AddTenureModel.resx">
+      <DependentUpon>201612241921460_AddTenureModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

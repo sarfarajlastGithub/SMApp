@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using SMApp.Web.LIB.Models.SchoolEN;
@@ -7,6 +8,7 @@ namespace SMApp.Web.LIB.ViewModels.AccountVM
 {
     public class RegisterViewModel
     {
+        public int Id { get; set; }  
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -28,18 +30,18 @@ namespace SMApp.Web.LIB.ViewModels.AccountVM
         [Display(Name = "School Name")]
         public string SchoolName { get; set; }
 
-        [Required]
+        
         [Display(Name = "Stay Facility")]
         public SchoolFType SchoolFType { get; set; }
 
-        [Required]
+        
         [Display(Name = "School Type")]
         public SchoolGType SchoolGType { get; set; }
 
         [Required]
         [Display(Name = "Total Students")]
         [StringLength(6, ErrorMessage = "Digit has to be less then 7")]
-        public string TotalStudents { get; set; }
+        public string TotalStudent { get; set; }
 
         [Display(Name = "School Phone Number")]
         [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
@@ -62,28 +64,17 @@ namespace SMApp.Web.LIB.ViewModels.AccountVM
 
         [Required]
         public Medium Medium { get; set; }
-
-        [Display(Name = "Established Date")]
-        public string EstablishedDate { get; set; }
-
-        public IEnumerable<SClassVM> ClassAndSections { get; set; }
-        public SClassVM ClassAndSection { get; set; }
-
-        public SAddress SAddress { get; set; }
         
-        public SClass SClassEnum { get; set; }
-        public SSectionEnum SSectionEnum { get; set; }
+        public string PhoneNumber { get; set; }
+        
+        [Required]
+        public City City { get; set; }
+
+        [Required]
+        public State State { get; set; }
+
+
     }
     
-    public class SClassVM
-    {
-        public SClass Name { get; set; }
 
-        public IEnumerable<SSectionVM> ListOfSection { get; set; }
-    }
-
-    public class SSectionVM
-    {
-        public SSectionEnum Name { get; set; }
-    }
 }

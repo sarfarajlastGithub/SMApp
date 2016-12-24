@@ -1,0 +1,191 @@
+﻿@model SMApp.Web.LIB.ViewModels.AccountVM.ClassViewAndUpdateModel
+@{
+    ViewBag.Title = "ClassViewAndUpdate";
+    Layout = "~/Views/Shared/_FullLayout.cshtml";
+}
+
+
+@section newStyle{
+    @Styles.Render("~/Content/jQueryUiCss")
+}
+@*<style>
+        .bigFont {
+            font-size: medium;
+        }
+    </style>*@
+
+<div class="row">
+    <h2 class="page-head-title">School Profile</h2>
+
+    <div class="col-sm-7">
+        <div class="panel panel-default panel-table">
+            <div style="background-color:dodgerblue">
+                <div class="panel-heading bigFont">
+                    Set All Classes
+                </div>
+            </div>
+
+            <div class="panel-body panel-border">
+                <div class="panel-heading">
+                    @using (Ajax.BeginForm("ClassViewAndUpdate", "Account", new AjaxOptions
+                    {
+                        HttpMethod = "post",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "clasajaxLoad",
+                        LoadingElementId = "divLoading",
+                        Confirm = "Confirm"
+                    }))
+                    {
+                    <div class="form-group">
+                        <p class="pull-right">Select Multiple Section according to class</p>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <br />
+                        <br />
+                        <div class="col-sm-4">
+                            <label class="col-sm-3 control-label">Class</label>
+
+                            @Html.EnumDropDownListFor(m => m.ClassName, new { @class = "form-control" })
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label class="col-sm-8 control-label">Section</label>
+                                <div class="col-sm-6">
+                                    <div class="be-checkbox">
+                                        <input id="check3" name="A" type="checkbox">
+                                        <label for="check3">A</label>
+                                    </div>
+                                    <div class="be-checkbox">
+                                        <input id="check4" name="B" type="checkbox">
+                                        <label for="check4">B</label>
+                                    </div>
+                                    <div class="be-checkbox">
+                                        <input id="check5" name="C" type="checkbox">
+                                        <label for="check5">C</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="be-checkbox">
+                                        <input id="check6" name="D" type="checkbox">
+                                        <label for="check6">D</label>
+                                    </div>
+                                    <div class="be-checkbox">
+                                        <input id="check7" name="E" type="checkbox">
+                                        <label for="check7">E</label>
+                                    </div>
+                                    <div class="be-checkbox">
+                                        <input id="check8" name="F" type="checkbox">
+                                        <label for="check8">F</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <br />
+                            <br />
+                            <button type="submit" @*style="margin-left:25%"*@ class="btn btn-primary btn-space btn-xl">Add</button>
+                            <div id="divLoading" class="col-lg-offset-4" style="color:forestgreen;width:200px;font-size:larger;display:none;position:absolute;">
+                                <img src="~/Content/Images/ajax-loader.gif" />Adding ....
+                            </div>
+                        </div>
+
+                    </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="clasajaxLoad" class="col-sm-5">
+
+        @Html.Partial("_AddClassPartial", Model);
+
+    </div>
+
+    <div class="col-sm-7">
+        <div class="panel panel-default panel-table">
+            <div style="background-color:dodgerblue">
+                <div class="panel-heading bigFont">
+                    Set All Tenure / Sessions
+                </div>
+            </div>
+
+            <div class="panel-body panel-border">
+                <div class="panel-heading">
+                    @using (Ajax.BeginForm("TenureViewAndUpdate", "Account", new AjaxOptions
+                    {
+                        HttpMethod = "post",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "tenajaxLoad",
+                        LoadingElementId = "divLoading",
+                        Confirm = "Confirm"
+                    }))
+                    {
+                        <div class="form-group">
+                            <p class="pull-right">Select Multiple Section according to class</p>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <br />
+                            <br />
+                            <div class="col-sm-4">
+                                <label class="control-label">Tenure Year / Session</label>
+                                @Html.EnumDropDownListFor(m => m.TenureYearName, new { @class = "form-control" })
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label class="col-sm-8 control-label">Select Date Limit</label>
+                                    <div class="col-sm-12">
+                                        @Html.LabelFor(t => t.StartDate)
+                                        @Html.TextBoxFor(t => t.StartDate, new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-sm-12">
+                                        @Html.LabelFor(t => t.EndDate)
+                                        @Html.TextBoxFor(t => t.EndDate, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <br />
+                                <br />
+                                <button type="submit" @*style="margin-left:25%"*@ class="btn btn-primary btn-space btn-xl">Add Tenure</button>
+                                <div id="divLoading" class="col-lg-offset-4" style="color:forestgreen;width:200px;font-size:larger;display:none;position:absolute;">
+                                    <img src="~/Content/Images/ajax-loader.gif" />Adding ....
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="tenajaxLoad" class="col-sm-5">
+
+        @Html.Partial("_ViewTenurePartial", Model);
+
+    </div>
+</div>
+
+
+@section anyscripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jQueryUiJs")
+    @Scripts.Render("~/bundles/ajaxUnobs")
+    <script>
+        $(function () {
+            $("#StartDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-MM-yy'
+            });
+            $("#EndDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-MM-yy'
+            });
+        });
+    </script>
+}

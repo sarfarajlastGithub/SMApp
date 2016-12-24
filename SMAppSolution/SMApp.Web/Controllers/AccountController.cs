@@ -1,16 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using SMApp.Web.LIB.Context;
 using SMApp.Web.LIB.Models.SchoolEN;
 using SMApp.Web.LIB.ViewModels;
 using SMApp.Web.LIB.ViewModels.AccountVM;
+using SMApp.Web.LIB.BL.Account;
+using SMApp.Web.LIB.ViewModels.Enums;
 
 namespace SMApp.Web.Controllers
 {
@@ -24,7 +31,7 @@ namespace SMApp.Web.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -53,6 +60,263 @@ namespace SMApp.Web.Controllers
                 _userManager = value;
             }
         }
+
+
+
+        //Update tenure
+        [HttpPost]
+        public PartialViewResult TenureViewAndUpdate(ClassViewAndUpdateModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_ViewTenurePartial", model);
+            }
+            var crid = User.Identity.GetUserId();
+            //ClassViewAndUpdateModel vm = new ClassViewAndUpdateModel();
+            //vm = GetTenureData();
+            var context = new AppDbContext();
+
+            if (context.TenureTimes.Any(t => t.SchoolProfileId == crid && t.TenureYearName == model.TenureYearName))
+            {
+                var tanureTime =
+                    context.TenureTimes.First(t => t.SchoolProfileId == crid && t.TenureYearName == model.TenureYearName);
+                tanureTime.TenureStartDate = DateTimeConvert.GetDate(model.StartDate);
+                tanureTime.TenureEndDate = DateTimeConvert.GetDate(model.EndDate);
+                context.SaveChanges();
+            }
+            else
+            {
+                TenureTime tn = new TenureTime
+                {
+                    SchoolProfileId = crid,
+                    TenureYearName = model.TenureYearName,
+                    TenureStartDate = DateTimeConvert.GetDate(model.StartDate),
+                    TenureEndDate = DateTimeConvert.GetDate(model.EndDate)
+                };
+                context.TenureTimes.Add(tn);
+                context.SaveChanges();
+            }
+
+            Thread.Sleep(2000);
+
+            return PartialView("_ViewTenurePartial", GetClassSectionData());
+        }
+
+
+        public ActionResult ClassViewAndUpdate()
+        {
+
+            return View(GetClassSectionData());
+        }
+
+
+        [HttpPost]
+        public ActionResult ClassViewAndUpdate(FormCollection form)
+        {
+
+            Dictionary<int, string> sc = new Dictionary<int, string>();
+            if (Request.Form["A"] == null)
+            {
+                sc.Add(1, "off");
+            }
+            else
+            {
+                sc.Add(1, "on");
+            }
+            if (Request.Form["B"] == null)
+            {
+                sc.Add(2, "off");
+            }
+            else
+            {
+                sc.Add(2, "on");
+            }
+            if (Request.Form["C"] == null)
+            {
+                sc.Add(3, "off");
+            }
+            else
+            {
+                sc.Add(3, "on");
+            }
+            if (Request.Form["D"] == null)
+            {
+                sc.Add(4, "off");
+            }
+            else
+            {
+                sc.Add(4, "on");
+            }
+            if (Request.Form["E"] == null)
+            {
+                sc.Add(5, "off");
+            }
+            else
+            {
+                sc.Add(5, "on");
+            }
+            if (Request.Form["F"] == null)
+            {
+                sc.Add(6, "off");
+            }
+            else
+            {
+                sc.Add(6, "on");
+            }
+            ClassViewAndUpdateModel md = GetClassSectionData();
+            string className = Request.Form["ClassName"];
+            if (string.IsNullOrEmpty(className))
+            {
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView("_AddClassPartial", md);
+                }
+
+                return View(md);
+
+            }
+
+            int A = (Request.Form["A"] == null) ? 0 : 1;
+            int B = (Request.Form["B"] == null) ? 0 : 2;
+            int C = (Request.Form["C"] == null) ? 0 : 3;
+            int D = (Request.Form["D"] == null) ? 0 : 4;
+            int E = (Request.Form["E"] == null) ? 0 : 5;
+            int F = (Request.Form["F"] == null) ? 0 : 6;
+
+
+            var clsName = EnumUtil.ParseEnum<SClass>(className);
+            var crid = User.Identity.GetUserId();
+
+
+            var context = new AppDbContext();
+
+
+            //Fro each Section There will be One Insert to ClassAndSection table
+            foreach (var item in sc)
+            {
+                var itemEnum = EnumUtil.ParseEnum<SSectionEnum>(item.Key.ToString());
+                var issExistClasSec = context.ClassAndSection.Any(c => c.SchoolProfileId == crid && c.SClass == clsName && c.SSection == itemEnum);
+
+                if (item.Value == "on")
+                {
+
+                    if (!issExistClasSec)
+                    {
+                        ClassAndSection sec = new ClassAndSection()
+                        {
+                            SchoolProfileId = crid,
+                            SClass = clsName,
+                            SSection = itemEnum
+                        };
+                        context.ClassAndSection.Add(sec);
+                        context.SaveChanges();
+
+                    }
+                    //}
+                }
+
+                if (item.Value == "off" && issExistClasSec)
+                {
+                    var existClasSec =
+                        context.ClassAndSection.First(
+                            c => c.SchoolProfileId == crid && c.SClass == clsName && c.SSection == itemEnum);
+                    context.ClassAndSection.Remove(existClasSec);
+                    context.SaveChanges();
+                }
+            }
+            md = GetClassSectionData();
+
+            Thread.Sleep(2000);
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_AddClassPartial", md);
+            }
+
+            return View(md);
+        }
+
+        /// <summary>
+        /// Tis is for Getting View Model of Class And Section form
+        /// </summary>
+        /// <returns></returns>
+        internal ClassViewAndUpdateModel GetClassSectionData()
+        {
+            var crUser = User.Identity.GetUserId();
+            var context = new AppDbContext();
+            var clsSes = context.ClassAndSection.Where(c => c.SchoolProfileId == crUser).ToList();
+
+            //Get All Distinct Class of School
+            var listClass = clsSes.Select(m => m.SClass).Distinct().ToList();
+
+
+            if (listClass.Count > 3 && listClass.Count < 5)
+            {
+                var sp = context.Users.First(p => p.Id == crUser);
+                sp.IsComplete = true;
+                context.SaveChanges();
+            }
+
+            //Creating object of ViewModel
+            ClassViewAndUpdateModel vm = new ClassViewAndUpdateModel();
+
+            List<SClassVM> cVMList = new List<SClassVM>();
+            List<SSectionVM> sList = new List<SSectionVM>();
+            //Iterating through all Class
+            foreach (var scls in listClass)
+            {
+                SClassVM cVM = new SClassVM();
+                //Find List of distinct Section list
+                List<SSectionVM> result = (from p in context.ClassAndSection
+                                           where p.SClass == scls && p.SchoolProfileId == crUser
+                                           select new SSectionVM()
+                                           {
+                                               Name = p.SSection,
+                                           }).Distinct().ToList();
+
+                //Adding Class Name
+                cVM.Name = scls;
+                //Adding Section list to that class
+                cVM.ListOfSection = result;
+
+                //The whole class object
+                //Adding to ViewModel
+                //So that we can iterate
+
+                cVMList.Add(cVM);
+            }
+            cVMList = cVMList.OrderBy(l => l.Name).ToList();
+            vm.SClassList = cVMList;
+
+            #region TenureRegion
+            var tenureTimes = context.TenureTimes.Where(c => c.SchoolProfileId == crUser).ToList();
+
+            //Get All Distinct Class of School
+            //var listClass = tenureTimes.Select(m => m.SClass).Distinct().ToList();
+
+
+            if (tenureTimes.Count > 1 && tenureTimes.Count < 10)
+            {
+                var sp = context.Users.First(p => p.Id == crUser);
+                sp.IsComplete = true;
+                context.SaveChanges();
+            }
+
+
+            vm.TenureYearList = tenureTimes.Select(t => new TenureTimeVM
+            {
+                TenureYearName = t.TenureYearName,
+                TenureStartDate = DateTimeConvert.GetString(t.TenureStartDate),
+                TenureEndDate = DateTimeConvert.GetString(t.TenureEndDate)
+            });
+
+            #endregion
+
+
+
+            return vm;
+        }
+
 
         //
         // GET: /Account/Login
@@ -122,7 +386,7 @@ namespace SMApp.Web.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account
             // will be locked out for a specified amount of time.
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -134,6 +398,64 @@ namespace SMApp.Web.Controllers
                     ModelState.AddModelError("", "Invalid code.");
                     return View(model);
             }
+        }
+
+        public ActionResult AppUserView()
+        {
+            SchoolProfile ob = new SchoolProfile();
+            var currentUserId = User.Identity.GetUserId();
+            UpdateViewModel vm = ob.GetProfileInfo(currentUserId);
+
+            return View(vm);
+        }
+        public ActionResult UpdateAppUser()
+        {
+            SchoolProfile ob = new SchoolProfile();
+            var currentUserId = User.Identity.GetUserId();
+            UpdateViewModel vm = ob.GetProfileInfo(currentUserId);
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateAppUser(UpdateViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Please insert Required Field.");
+                return View(model);
+            }
+
+            var currentUserId = User.Identity.GetUserId();
+            var context = new AppDbContext();
+            var vm = context.Users.Include(u => u.SAddress).First(m => m.Id == currentUserId);
+
+            vm.RegistarDate = DateTimeConvert.GetDate(model.RegistarDate);
+            vm.AnnulDateOfExam = DateTimeConvert.GetDate(model.AnnulDateOfExam);
+            vm.Board = model.Board;
+            vm.CpName = model.CpName;
+            vm.CpPhone = model.CpPhone;
+            vm.Email = model.Email;
+            vm.EstablishedDate = DateTimeConvert.GetDate(model.EstablishedDate);
+            vm.Medium = model.Medium;
+            vm.SAddress = new SAddress
+            {
+                AddL1 = model.AddL1,
+                AddL2 = model.AddL2,
+                City = model.City,
+                Pin = model.Pin,
+                State = model.State
+            };
+
+            vm.SchoolFType = model.SchoolFType;
+            vm.SchoolGType = model.SchoolGType;
+            vm.SchoolName = model.SchoolName;
+            vm.SchoolPhoneNumber = model.SchoolPhoneNumber;
+            vm.TotalStudent = model.TotalStudent;
+            context.SaveChanges();
+
+            return RedirectToLocal("AppUserView");
         }
 
         //
@@ -156,9 +478,9 @@ namespace SMApp.Web.Controllers
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
-                    Email = model.Email ,
+                    Email = model.Email,
                     SchoolName = model.SchoolName,
-                    TotalStudent = model.TotalStudents,
+                    TotalStudent = model.TotalStudent,
                     Board = model.Board,
                     Medium = model.Medium,
                     CpName = model.CpName,
@@ -166,14 +488,14 @@ namespace SMApp.Web.Controllers
                     RegistarDate = DateTime.Now,
                     SAddress = new SAddress
                     {
-                        City = model.SAddress.City,
-                        state = model.SAddress.state
+                        City = model.City,
+                        State = model.State
                     }
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
