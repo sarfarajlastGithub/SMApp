@@ -135,8 +135,8 @@
 
 </div>
 <p>
-    @Html.ActionLink("Edit", "AddStudent", new {id = Model.StudentId}) |
-    <a class="btn btn-danger" id="deleteLink" href="/Student/DeleteStudent/@Model.StudentId">Delete</a> |
+    @Html.ActionLink("Edit", "AddStudent", new {id = Model.RegId}) |
+    <a class="btn btn-danger" onclick="var r = confirm('Do You Want to delete The whole Studen Profile And all Respective Data ?'); if (r === false) { return false;}"  id="deleteLink" href="/Student/DeleteStudent/@Model.RegId">Delete</a> |
     @*@Html.ActionLink("Delete", "DeleteStudent", new { id = Model.StudentId }) |*@
     <a class="btn btn-info" href="/Student/StudentSearch">Back to Search</a>
 </p>
@@ -144,15 +144,17 @@
 
     <script>
         $(function() {
-            $("deleteLink").click(function() {
 
+             function confm() {
                 var r = confirm("You Want to delete");
                 if (r === true) {
-
+                    return true;
                 } else {
                     return false;
                 }
-            });
+            }
+
+
         })();
     </script>
 }

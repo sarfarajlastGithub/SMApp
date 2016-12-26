@@ -8,7 +8,7 @@ namespace SMApp.Web.LIB.ViewModels.StudentVM
 {
     public class StudentSearchVM
     {
-        public string StudentProfileId { get; set; }
+        public string StudentRegId { get; set; }
 
         public string StudentName { get; set; }
 

@@ -11,6 +11,8 @@ namespace SMApp.Web.LIB.ViewModels.StudentVM
 {
     public class StudentVM
     {
+
+        public string RegId { get; set; }
         public string StudentId { get; set; }
         public string SchoolId { get; set; }
 

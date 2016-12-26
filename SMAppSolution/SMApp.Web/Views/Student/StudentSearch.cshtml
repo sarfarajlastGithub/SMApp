@@ -82,6 +82,7 @@
                             <th>Session</th>
                             <th>Active</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                 </table>
@@ -114,10 +115,16 @@
                         { "data": "IsActive", "name": "IsActive", "autoWidth": true },      //index 4
 
                          {
-                             "data": "StudentProfileId", "width": "50px", "render": function (data) {
-                                 return '<a class="btn btn-info" href="/student/StudentDetails/' + data + '">Details</a>';
+                             "data": "StudentRegId", "width": "50px", "render": function (data) {
+                                 return '<a class="btn btn-link" href="/student/StudentDetails/' + data + '">Details</a>';
+                             }
+                         },
+                         {
+                             "data": "StudentRegId", "width": "50px", "render": function (data) {
+                                 return '<a class="btn btn-success" href="/student/UpgradeStudent/' + data + '">Upgrade</a>';
                              }
                          }
+
                 ]
             });
 

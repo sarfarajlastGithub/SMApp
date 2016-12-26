@@ -12,6 +12,8 @@ namespace SMApp.Web.LIB.Models.StudentEN
     {
         public int Id { get; set; }
 
+        public string RegId { get; set; }
+
         public ApplicationUser SchoolProfile { get; set; }
 
         [Required]
@@ -34,5 +36,7 @@ namespace SMApp.Web.LIB.Models.StudentEN
         public bool IsActive { get; set; }
 
         public DateTime? AdmissioinDate { get; set; }
+
+        public StudentClub ClubName { get; set; }
     }
 }

@@ -96,17 +96,20 @@ namespace SMApp.Web.Controllers
             //SORTING...  (For sorting we need to add a reference System.Linq.Dynamic)
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
             {
-                if (sortColumn == "StuClassString")
+                switch (sortColumn)
                 {
-                    sortColumn = "StuClass";
-                }
-                if (sortColumn == "StuSectionString")
-                {
-                    sortColumn = "StuSection";
-                }
-                if (sortColumn == "TenureNameString")
-                {
-                    sortColumn = "TenureYear";
+                    case "StuClassString":
+                        sortColumn = "StuClass";
+                        break;
+                    case "StuSectionString":
+                        sortColumn = "StuSection";
+                        break;
+                    case "TenureNameString":
+                        sortColumn = "TenureYear";
+                        break;
+                    case "":
+                        sortColumn = "RegId";
+                        break;
                 }
                 v = v.OrderBy(sortColumn + " " + sortColumnDir);
             }
@@ -114,18 +117,86 @@ namespace SMApp.Web.Controllers
             recordsTotal = v.Count();
             var data = v.Skip(skip).Take(pageSize).Select(s => new StudentSearchVM
             {
-                StudentProfileId = s.StudentProfileId,
+
+                StudentRegId = s.RegId,
                 StudentName = s.StudentName,
                 StuClassString = s.StuClass.ToString(),
                 StuSectionString = s.StuSection.ToString(),
                 TenureNameString = s.TenureYear.ToString(),
-                IsActive = s.IsActive
+                IsActive = s.IsActive,
+
             }).ToList();
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data },
                 JsonRequestBehavior.AllowGet);
 
         }
 
+        public ActionResult UpgradeStudent(string id)
+        {
+
+            if (string.IsNullOrEmpty(id))
+            {
+                return View("StudentDetails");
+            }
+
+            var crid = User.Identity.GetUserId();
+            var context = new AppDbContext();
+
+            if (!context.StudentRegs.Any(s => s.RegId == id))
+            {
+                return View("StudentSearch");
+            }
+            var stuReg = context.StudentRegs.First(s => s.RegId == id);
+            StudentVM vm = new StudentVM();
+            vm.RegId = id;
+            vm.AdmissioinDate = DateTimeConvert.GetString(stuReg.AdmissioinDate);
+            vm.TenureYear = stuReg.TenureYear;
+            vm.Stuclass = stuReg.StuClass;
+            vm.StuSection = stuReg.StuSection;
+            vm.IsActive = stuReg.IsActive;
+            vm.ClubName = stuReg.ClubName;
+            vm.StudentProfileId = stuReg.StudentProfileId;
+            vm.Name = stuReg.StudentName;
+            vm.SchoolId = stuReg.SchoolProfileId;
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult UpgradeStudent(StudentVM vm)
+        {
+
+            var context = new AppDbContext();
+
+            if (context.StudentRegs.Any(s => s.RegId == vm.RegId && s.StuClass == vm.Stuclass))
+            {
+                var studentReg = context.StudentRegs.First(s => s.RegId == vm.RegId && s.StuClass == vm.Stuclass);
+                studentReg.TenureYear = vm.TenureYear;
+                studentReg.StuSection = vm.StuSection;
+                studentReg.IsActive = vm.IsActive;
+                studentReg.AdmissioinDate = DateTimeConvert.GetDate(vm.AdmissioinDate);
+                studentReg.ClubName = vm.ClubName;
+                context.SaveChanges();
+                return View("StudentSearch");
+            }
+
+            StudentReg streg = new StudentReg();
+            streg.RegId = Guid.NewGuid().ToString();
+            streg.AdmissioinDate = DateTimeConvert.GetDate(vm.AdmissioinDate);
+            streg.ClubName = vm.ClubName;
+            streg.StudentProfileId = vm.StudentProfileId;
+            streg.StudentName = vm.Name;
+            streg.IsActive = vm.IsActive;
+            streg.TenureYear = vm.TenureYear;
+            streg.StuClass = vm.Stuclass;
+            streg.StuSection = vm.StuSection;
+            streg.SchoolProfileId = vm.SchoolId;
+
+            context.StudentRegs.Add(streg);
+            context.SaveChanges();
+
+            return View("StudentSearch");
+        }
 
         public ActionResult DeleteStudent(string id)
         {
@@ -138,15 +209,19 @@ namespace SMApp.Web.Controllers
             var crid = User.Identity.GetUserId();
             var context = new AppDbContext();
 
-            if (!context.StudentProfiles.Any(s => s.StudentId == id))
+            if (!context.StudentRegs.Any(s => s.RegId == id))
             {
                 return View("StudentSearch");
             }
-            var stuProfile = context.StudentProfiles.First(s => s.StudentId == id);
-            var stuReg = context.StudentRegs.First(s => s.StudentProfileId == id);
+            //While Deleting Student Registration,
+            // We Need to delete all respective data which belongs to That Student
 
+            var stuReg = context.StudentRegs.First(s => s.RegId == id);
+            var stuProfile = context.StudentProfiles.First(s => s.StudentId == stuReg.StudentProfileId);
+            var allstuReg = context.StudentRegs.Where(s => s.StudentProfileId == stuProfile.StudentId);
             context.StudentProfiles.Remove(stuProfile);
-            context.StudentRegs.Remove(stuReg);
+
+            context.StudentRegs.RemoveRange(allstuReg);
 
             context.SaveChanges();
 
@@ -171,7 +246,24 @@ namespace SMApp.Web.Controllers
             var crid = User.Identity.GetUserId();
             var context = new AppDbContext();
 
-            var vm = context.StudentProfiles.Include(x => x.Address).First(s => s.StudentId == id);
+
+            //Main Unique id is Student registration Id
+            var vm1 = context.StudentRegs.First(s => s.RegId == id);
+
+            student.RegId = vm1.RegId;
+            student.SchoolId = vm1.SchoolProfileId;
+            student.StudentProfileId = vm1.StudentProfileId;
+            student.Name = vm1.StudentName ?? "";
+            student.Stuclass = vm1.StuClass;
+            student.StuSection = vm1.StuSection;
+            student.TenureYear = vm1.TenureYear;
+            student.IsActive = vm1.IsActive;
+            student.AdmissioinDate = DateTimeConvert.GetString(vm1.AdmissioinDate);
+            student.ClubName = vm1.ClubName;
+
+
+            //Fetch student profile data from student profile id of registration table
+            var vm = context.StudentProfiles.Include(x => x.Address).First(s => s.StudentId == vm1.StudentProfileId);
 
 
             student.StudentId = vm.StudentId;
@@ -191,19 +283,10 @@ namespace SMApp.Web.Controllers
             student.City = vm.Address.City;
             student.Pin = vm.Address.Pin;
             student.State = vm.Address.State;
-            student.ClubName = vm.ClubName;
+
             student.SchoolId = crid;
 
-            var vm1 = context.StudentRegs.First(s => s.StudentProfileId == id);
 
-            student.SchoolId = vm1.SchoolProfileId;
-            student.StudentProfileId = vm1.StudentProfileId;
-            student.Name = vm1.StudentName ?? "";
-            student.Stuclass = vm1.StuClass;
-            student.StuSection = vm1.StuSection;
-            student.TenureYear = vm1.TenureYear;
-            student.IsActive = vm1.IsActive;
-            student.AdmissioinDate = DateTimeConvert.GetString(vm1.AdmissioinDate);
             return student;
         }
 
@@ -229,17 +312,33 @@ namespace SMApp.Web.Controllers
             }
 
             var stId = Guid.NewGuid().ToString();
+            var regId = Guid.NewGuid().ToString();
             //Getting Current
             var crid = User.Identity.GetUserId();
             var context = new AppDbContext();
 
             //Checking Exist Students
-            if (String.IsNullOrEmpty(vm.StudentId))
+            if (String.IsNullOrEmpty(vm.RegId))
             {
-                vm.StudentId = "0";
+                vm.RegId = "0";
             }
-            if (context.StudentProfiles.Any(s => s.StudentId == vm.StudentId))
+            //checking Exist Registered Student
+            if (context.StudentRegs.Any(s => s.RegId == vm.RegId))
             {
+
+                //From Student registration Update
+                var studentReg = context.StudentRegs.First(s => s.StudentProfileId == vm.StudentId);
+
+
+                studentReg.StudentName = vm.Name;
+                studentReg.StuClass = vm.Stuclass;
+                studentReg.StuSection = vm.StuSection;
+                studentReg.TenureYear = vm.TenureYear;
+                studentReg.IsActive = vm.IsActive;
+                studentReg.AdmissioinDate = DateTimeConvert.GetDate(vm.AdmissioinDate);
+                studentReg.ClubName = vm.ClubName;
+
+                //For Student Profile Update
                 var student = context.StudentProfiles.First(s => s.StudentId == vm.StudentId);
 
                 student.Name = vm.Name;
@@ -252,7 +351,7 @@ namespace SMApp.Web.Controllers
                 student.GuardianQualification = vm.GuardianQualification;
                 student.GuardianOcupation = vm.GuardianOcupation;
                 student.RelationWithGuardian = vm.RelationWithGuardian;
-                student.ClubName = vm.ClubName;
+
 
 
                 student.Address = new Address
@@ -263,18 +362,7 @@ namespace SMApp.Web.Controllers
                     Pin = vm.Pin,
                     State = vm.State
                 };
-                context.SaveChanges();
-                //Change In Student Register Model
-                var studentReg = context.StudentRegs.First(s => s.StudentProfileId == vm.StudentId);
-
-
-                studentReg.StudentName = vm.Name;
-                studentReg.StuClass = vm.Stuclass;
-                studentReg.StuSection = vm.StuSection;
-                studentReg.TenureYear = vm.TenureYear;
-                studentReg.IsActive = vm.IsActive;
-                studentReg.AdmissioinDate = DateTimeConvert.GetDate(vm.AdmissioinDate);
-
+                //Saving Changes
                 context.SaveChanges();
 
                 return View("StudentSearch");
@@ -296,7 +384,7 @@ namespace SMApp.Web.Controllers
             stp.GuardianQualification = vm.GuardianQualification;
             stp.GuardianOcupation = vm.GuardianOcupation;
             stp.RelationWithGuardian = vm.RelationWithGuardian;
-            stp.ClubName = vm.ClubName;
+
 
             stp.Address = new Address
             {
@@ -314,6 +402,7 @@ namespace SMApp.Web.Controllers
 
             StudentReg stg = new StudentReg()
             {
+                RegId = regId,
                 SchoolProfileId = crid,
                 StudentProfileId = stId,
                 StudentName = vm.Name,
@@ -321,8 +410,9 @@ namespace SMApp.Web.Controllers
                 StuSection = vm.StuSection,
                 TenureYear = vm.TenureYear,
                 IsActive = vm.IsActive,
-                AdmissioinDate = string.IsNullOrEmpty(vm.AdmissioinDate) ? DateTime.Today : DateTimeConvert.GetDate(vm.AdmissioinDate)
-        };
+                AdmissioinDate = string.IsNullOrEmpty(vm.AdmissioinDate) ? DateTime.Today : DateTimeConvert.GetDate(vm.AdmissioinDate),
+                ClubName = vm.ClubName
+            };
             context.StudentRegs.Add(stg);
             context.SaveChanges();
 

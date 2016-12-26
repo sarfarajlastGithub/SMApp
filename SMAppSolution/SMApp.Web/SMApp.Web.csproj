@@ -286,6 +286,14 @@
     <Compile Include="Migrations\201612260053317_AddClubName.Designer.cs">
       <DependentUpon>201612260053317_AddClubName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612261838554_AddRegIdToStudentReg.cs" />
+    <Compile Include="Migrations\201612261838554_AddRegIdToStudentReg.Designer.cs">
+      <DependentUpon>201612261838554_AddRegIdToStudentReg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612261950112_ChangeClubProperty.cs" />
+    <Compile Include="Migrations\201612261950112_ChangeClubProperty.Designer.cs">
+      <DependentUpon>201612261950112_ChangeClubProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -440,6 +448,7 @@
     <Content Include="Views\Student\StudentSearch.cshtml" />
     <Content Include="Views\Student\AddStudent.cshtml" />
     <Content Include="Views\Student\StudentDetails.cshtml" />
+    <Content Include="Views\Student\UpgradeStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -488,6 +497,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612260053317_AddClubName.resx">
       <DependentUpon>201612260053317_AddClubName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612261838554_AddRegIdToStudentReg.resx">
+      <DependentUpon>201612261838554_AddRegIdToStudentReg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612261950112_ChangeClubProperty.resx">
+      <DependentUpon>201612261950112_ChangeClubProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

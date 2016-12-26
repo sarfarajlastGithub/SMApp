@@ -33,6 +33,5 @@ namespace SMApp.Web.LIB.Models.StudentEN
         public string MotherOcupation { get; set; }
         public DateTime? DateOfAdded { get; set; }
 
-        public StudentClub ClubName { get; set; }
     }
 }
