@@ -38,5 +38,7 @@ namespace SMApp.Web.LIB.Models.StudentEN
         public DateTime? AdmissioinDate { get; set; }
 
         public StudentClub ClubName { get; set; }
+
+        public virtual IEnumerable<StuAttendance> StuAttendances { get; set; }
     }
 }

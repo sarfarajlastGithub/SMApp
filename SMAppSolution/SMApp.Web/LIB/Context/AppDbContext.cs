@@ -26,5 +26,7 @@ namespace SMApp.Web.LIB.Context
         public DbSet<StudentProfile> StudentProfiles { get; set; }
 
         public DbSet<StudentReg> StudentRegs { get; set; }
+
+        public DbSet<StuAttendance> StuAttendances { get; set; }
     }
 }

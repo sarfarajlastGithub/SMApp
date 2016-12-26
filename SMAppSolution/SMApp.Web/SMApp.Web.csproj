@@ -203,6 +203,7 @@
     <Compile Include="LIB\Models\SchoolEN\TenureHoliday.cs" />
     <Compile Include="LIB\Models\SchoolEN\TenureTime.cs" />
     <Compile Include="LIB\Models\StudentEN\Address.cs" />
+    <Compile Include="LIB\Models\StudentEN\StuAttendance.cs" />
     <Compile Include="LIB\Models\StudentEN\StudentProfile.cs" />
     <Compile Include="LIB\Models\StudentEN\StudentReg.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\AccountViewModels.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="LIB\ViewModels\Enums\StudentClub.cs" />
     <Compile Include="LIB\ViewModels\Enums\TenureYear.cs" />
     <Compile Include="LIB\ViewModels\EnumUtil.cs" />
+    <Compile Include="LIB\ViewModels\StudentVM\StuAttendanceVM.cs" />
     <Compile Include="LIB\ViewModels\StudentVM\StudentSearchVM.cs" />
     <Compile Include="LIB\ViewModels\StudentVM\StudentVM.cs" />
     <Compile Include="Migrations\201612232303085_InitialAfterSchoolModelAdded.cs" />
@@ -293,6 +295,10 @@
     <Compile Include="Migrations\201612261950112_ChangeClubProperty.cs" />
     <Compile Include="Migrations\201612261950112_ChangeClubProperty.Designer.cs">
       <DependentUpon>201612261950112_ChangeClubProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612262140545_AddStudentAttendance.cs" />
+    <Compile Include="Migrations\201612262140545_AddStudentAttendance.Designer.cs">
+      <DependentUpon>201612262140545_AddStudentAttendance.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -503,6 +509,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612261950112_ChangeClubProperty.resx">
       <DependentUpon>201612261950112_ChangeClubProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612262140545_AddStudentAttendance.resx">
+      <DependentUpon>201612262140545_AddStudentAttendance.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
