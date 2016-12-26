@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -64,6 +65,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -186,6 +191,7 @@
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -196,6 +202,9 @@
     <Compile Include="LIB\Models\SchoolEN\SAddress.cs" />
     <Compile Include="LIB\Models\SchoolEN\TenureHoliday.cs" />
     <Compile Include="LIB\Models\SchoolEN\TenureTime.cs" />
+    <Compile Include="LIB\Models\StudentEN\Address.cs" />
+    <Compile Include="LIB\Models\StudentEN\StudentProfile.cs" />
+    <Compile Include="LIB\Models\StudentEN\StudentReg.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\AccountViewModels.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\ClassViewAndUpdateModel.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\GetAppUserInfo.cs" />
@@ -210,15 +219,21 @@
     <Compile Include="LIB\ViewModels\DashBoardVM.cs" />
     <Compile Include="LIB\ViewModels\DateTimeConvert.cs" />
     <Compile Include="LIB\ViewModels\Enums\City.cs" />
+    <Compile Include="LIB\ViewModels\Enums\Gender.cs" />
     <Compile Include="LIB\ViewModels\Enums\Medium.cs" />
+    <Compile Include="LIB\ViewModels\Enums\Qualification.cs" />
+    <Compile Include="LIB\ViewModels\Enums\Relation.cs" />
     <Compile Include="LIB\ViewModels\Enums\SBoard.cs" />
     <Compile Include="LIB\ViewModels\Enums\SchoolFType.cs" />
     <Compile Include="LIB\ViewModels\Enums\SchoolGType.cs" />
     <Compile Include="LIB\ViewModels\Enums\SClass.cs" />
     <Compile Include="LIB\ViewModels\Enums\SSectionEnum.cs" />
     <Compile Include="LIB\ViewModels\Enums\State.cs" />
+    <Compile Include="LIB\ViewModels\Enums\StudentClub.cs" />
     <Compile Include="LIB\ViewModels\Enums\TenureYear.cs" />
     <Compile Include="LIB\ViewModels\EnumUtil.cs" />
+    <Compile Include="LIB\ViewModels\StudentVM\StudentSearchVM.cs" />
+    <Compile Include="LIB\ViewModels\StudentVM\StudentVM.cs" />
     <Compile Include="Migrations\201612232303085_InitialAfterSchoolModelAdded.cs" />
     <Compile Include="Migrations\201612232303085_InitialAfterSchoolModelAdded.Designer.cs">
       <DependentUpon>201612232303085_InitialAfterSchoolModelAdded.cs</DependentUpon>
@@ -251,6 +266,26 @@
     <Compile Include="Migrations\201612241921460_AddTenureModel.Designer.cs">
       <DependentUpon>201612241921460_AddTenureModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612251924231_Addstudentmodel.cs" />
+    <Compile Include="Migrations\201612251924231_Addstudentmodel.Designer.cs">
+      <DependentUpon>201612251924231_Addstudentmodel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612251940312_Addstudentmodel1.cs" />
+    <Compile Include="Migrations\201612251940312_Addstudentmodel1.Designer.cs">
+      <DependentUpon>201612251940312_Addstudentmodel1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612252003537_Addstudentmodel2.cs" />
+    <Compile Include="Migrations\201612252003537_Addstudentmodel2.Designer.cs">
+      <DependentUpon>201612252003537_Addstudentmodel2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612252135060_AddStuden.cs" />
+    <Compile Include="Migrations\201612252135060_AddStuden.Designer.cs">
+      <DependentUpon>201612252135060_AddStuden.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612260053317_AddClubName.cs" />
+    <Compile Include="Migrations\201612260053317_AddClubName.Designer.cs">
+      <DependentUpon>201612260053317_AddClubName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -260,6 +295,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DataTable\jquery.dataTables.css" />
+    <Content Include="Content\DataTable\jquery.dataTables.min.css" />
     <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\metisMenu.css" />
     <Content Include="Content\metisMenu.min.css" />
@@ -330,6 +367,9 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\DataTable\dataTables.bootstrap.js" />
+    <Content Include="Scripts\DataTable\jquery.dataTables.js" />
+    <Content Include="Scripts\DataTable\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
@@ -397,6 +437,9 @@
     <Content Include="Views\Account\ClassViewAndUpdate.cshtml" />
     <Content Include="Views\Shared\_AddClassPartial.cshtml" />
     <Content Include="Views\Shared\_ViewTenurePartial.cshtml" />
+    <Content Include="Views\Student\StudentSearch.cshtml" />
+    <Content Include="Views\Student\AddStudent.cshtml" />
+    <Content Include="Views\Student\StudentDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -430,6 +473,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612241921460_AddTenureModel.resx">
       <DependentUpon>201612241921460_AddTenureModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612251924231_Addstudentmodel.resx">
+      <DependentUpon>201612251924231_Addstudentmodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612251940312_Addstudentmodel1.resx">
+      <DependentUpon>201612251940312_Addstudentmodel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612252003537_Addstudentmodel2.resx">
+      <DependentUpon>201612252003537_Addstudentmodel2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612252135060_AddStuden.resx">
+      <DependentUpon>201612252135060_AddStuden.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612260053317_AddClubName.resx">
+      <DependentUpon>201612260053317_AddClubName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

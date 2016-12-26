@@ -1,0 +1,291 @@
+﻿@model SMApp.Web.LIB.ViewModels.StudentVM.StudentVM
+
+@{
+    ViewBag.Title = "UpdateAppUser";
+    Layout = "~/Views/Shared/_FullLayout.cshtml";
+}
+@section newStyle{
+    @Styles.Render("~/Content/jQueryUiCss")
+}
+
+@using (Html.BeginForm("AddStudent", "Student", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        Add / Update Students
+                    </div>
+                    <!-- .panel-heading -->
+                    <div class="panel-body">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Basic Info</a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div>
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div>
+                                            @Html.HiddenFor(m => m.StudentId)
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Name, htmlAttributes: new {@class = "control-label col-md-2"})
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                                                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Gender, htmlAttributes: new {@class = "control-label col-md-2"})
+                                            <div class="col-md-10">
+                                                @Html.EnumDropDownListFor(model => model.Gender, htmlAttributes: new {@class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.Gender, "", new {@class = "text-danger"})
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new {@class = "control-label col-md-2"})
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.DateOfBirth, new {htmlAttributes = new {@class = "form-control"}})
+                                                @Html.ValidationMessageFor(model => model.DateOfBirth, "", new {@class = "text-danger"})
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PreEduInfo, htmlAttributes: new {@class = "control-label col-md-2"})
+                                            <div class="col-md-10">
+                                                @Html.TextAreaFor(model => model.PreEduInfo, htmlAttributes: new {@class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.PreEduInfo, "", new {@class = "text-danger"})
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.AdmissioinDate, htmlAttributes: new {@class = "control-label col-md-2"})
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.AdmissioinDate, new {htmlAttributes = new {@class = "form-control"}})
+                                                @Html.ValidationMessageFor(model => model.AdmissioinDate, "", new {@class = "text-danger"})
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="panel-footer">
+                                        <a class="btn btn-info" href="/Student/StudentSearch">Back To Search</a>
+                                        <a data-toggle="collapse" class="btn btn-info" data-parent="#accordion" href="#collapseTwo">Next</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Guardian info</a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.GuardianName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.GuardianName, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.GuardianName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.GuardianMobile, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.GuardianMobile, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.GuardianMobile, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.GuardialEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.GuardialEmail, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.GuardialEmail, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.GuardianQualification, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EnumDropDownListFor(model => model.GuardianQualification, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.GuardianQualification, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.GuardianOcupation, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.GuardianOcupation, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.GuardianOcupation, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.RelationWithGuardian, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EnumDropDownListFor(model => model.RelationWithGuardian, new { @class = "form-control" } )
+                                                @Html.ValidationMessageFor(model => model.RelationWithGuardian, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <a data-toggle="collapse" class="btn btn-info" data-parent="#accordion" href="#collapseThree">Next</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Address Info</a>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.AddL1, htmlAttributes: new {@class = "control-label col-md-2"})
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.AddL1, new {htmlAttributes = new {@class = "form-control"}})
+                                                @Html.ValidationMessageFor(model => model.AddL1, "", new {@class = "text-danger"})
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.AddL2, htmlAttributes: new {@class = "control-label col-md-2"})
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.AddL2, new {htmlAttributes = new {@class = "form-control"}})
+                                                @Html.ValidationMessageFor(model => model.AddL2, "", new {@class = "text-danger"})
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.City, htmlAttributes: new {@class = "control-label col-md-2"})
+                                            <div class="col-md-10">
+                                                @Html.EnumDropDownListFor(model => model.City, new {@class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.City, "", new {@class = "text-danger"})
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.State, htmlAttributes: new {@class = "control-label col-md-2"})
+                                            <div class="col-md-10">
+                                                @Html.EnumDropDownListFor(model => model.State, new {@class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.State, "", new {type = "email", @class = "text-danger"})
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Pin, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.Pin, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Pin, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="panel-footer">
+                                        <a data-toggle="collapse" class="btn btn-info" data-parent="#accordion" href="#collapseFour">Next</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Academic Info</a>
+                                    </h4>
+                                </div>
+                                <div id="collapseFour" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.TenureYear, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EnumDropDownListFor(model => model.TenureYear, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.TenureYear, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Stuclass, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EnumDropDownListFor(model => model.Stuclass, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.Stuclass, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.StuSection, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EnumDropDownListFor(model => model.StuSection, htmlAttributes: new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.StuSection, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ClubName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EnumDropDownListFor(model => model.ClubName, htmlAttributes: new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.ClubName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.CheckBoxFor(model => model.IsActive,  new { @class = "form-control"  })
+                                                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <input type="submit" value="Save" class="btn btn-default btn-success" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+
+    </div>
+}
+
+
+@section anyscripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jQueryUiJs")
+    <script>
+        $(function () {
+            $("#DateOfBirth").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-MM-yy'
+                //maxDate: "-24M -10D"
+            });
+            $("#AdmissioinDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-MM-yy'
+            });
+        });
+    </script>
+}

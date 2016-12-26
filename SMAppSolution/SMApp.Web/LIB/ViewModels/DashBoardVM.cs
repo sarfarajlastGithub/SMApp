@@ -23,6 +23,8 @@ namespace SMApp.Web.LIB.ViewModels
                 _isComplete = ob.CurrentAppUser.IsComplete;
             }
         }
+
+        public string StudentCount { get; set; }
     }
 
 }

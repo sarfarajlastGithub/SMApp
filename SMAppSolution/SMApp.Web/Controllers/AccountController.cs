@@ -12,11 +12,11 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using SMApp.Web.LIB.BL.Account;
 using SMApp.Web.LIB.Context;
 using SMApp.Web.LIB.Models.SchoolEN;
 using SMApp.Web.LIB.ViewModels;
 using SMApp.Web.LIB.ViewModels.AccountVM;
-using SMApp.Web.LIB.BL.Account;
 using SMApp.Web.LIB.ViewModels.Enums;
 
 namespace SMApp.Web.Controllers

@@ -39,5 +39,14 @@ namespace SMApp.Web.LIB.BL.Account
             vm.TotalStudent = model.TotalStudent;
             return vm;
         }
+
+        internal string GetTotalStudents()
+        {
+            var user = new GetAppUserInfo();
+            var crid = user.CurrentUserId;
+            var contex = new AppDbContext();
+            return contex.StudentRegs.Count(s => s.SchoolProfileId == crid).ToString();
+        }
+        
     }
 }

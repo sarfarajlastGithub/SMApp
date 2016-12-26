@@ -1,0 +1,158 @@
+﻿@model SMApp.Web.LIB.ViewModels.StudentVM.StudentVM
+
+@{
+    ViewBag.Title = "AppUserView";
+    Layout = "~/Views/Shared/_FullLayout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Profile</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Basic info
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.Name) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.Name)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.Gender) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.Gender).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.DateOfBirth) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.DateOfBirth)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.PreEduInfo) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.PreEduInfo).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.AdmissioinDate) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.AdmissioinDate).ToString()</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Guardian info
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.GuardianName) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.GuardianName)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.GuardianMobile) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.GuardianMobile)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.GuardialEmail) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.GuardialEmail)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.GuardianQualification) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.GuardianQualification).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.GuardianOcupation) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.GuardianOcupation)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.RelationWithGuardian) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.RelationWithGuardian).ToString()</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Address info
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.AddL1) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.AddL1)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.AddL2) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.AddL2)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.City) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.City).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.State) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.State)</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.Pin) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.Pin).ToString()</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Academic info
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.TenureYear) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.TenureYear).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.Stuclass) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.Stuclass).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.StuSection) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.StuSection).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.ClubName) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.ClubName).ToString()</div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-sm-4">@Html.DisplayNameFor(model => model.IsActive) :</div>
+                    <div class="col-sm-8">@Html.DisplayFor(model => model.IsActive)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "AddStudent", new {id = Model.StudentId}) |
+    <a class="btn btn-danger" id="deleteLink" href="/Student/DeleteStudent/@Model.StudentId">Delete</a> |
+    @*@Html.ActionLink("Delete", "DeleteStudent", new { id = Model.StudentId }) |*@
+    <a class="btn btn-info" href="/Student/StudentSearch">Back to Search</a>
+</p>
+@section anyscripts {
+
+    <script>
+        $(function() {
+            $("deleteLink").click(function() {
+
+                var r = confirm("You Want to delete");
+                if (r === true) {
+
+                } else {
+                    return false;
+                }
+            });
+        })();
+    </script>
+}

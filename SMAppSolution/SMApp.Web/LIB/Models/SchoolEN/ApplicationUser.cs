@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using SMApp.Web.LIB.Models.StudentEN;
 using SMApp.Web.LIB.ViewModels.Enums;
 
 namespace SMApp.Web.LIB.Models.SchoolEN
@@ -29,7 +31,7 @@ namespace SMApp.Web.LIB.Models.SchoolEN
         public DateTime? AnnulDateOfExam { get; set; }
         public Medium Medium { get; set; }
         public DateTime? EstablishedDate { get; set; }
-
+        
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

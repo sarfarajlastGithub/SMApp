@@ -1,6 +1,7 @@
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SMApp.Web.LIB.Models.SchoolEN;
+using SMApp.Web.LIB.Models.StudentEN;
 
 namespace SMApp.Web.LIB.Context
 {
@@ -21,6 +22,9 @@ namespace SMApp.Web.LIB.Context
         public DbSet<ClassAndSection> ClassAndSection { get; set; }
 
         public DbSet<TenureTime> TenureTimes { get; set; }
-        
+
+        public DbSet<StudentProfile> StudentProfiles { get; set; }
+
+        public DbSet<StudentReg> StudentRegs { get; set; }
     }
 }

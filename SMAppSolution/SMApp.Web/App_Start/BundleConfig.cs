@@ -25,8 +25,11 @@ namespace SMApp.Web
                         "~/Scripts/jquery.validate*"));
             bundles.Add(new ScriptBundle("~/bundles/ajaxUnobs").Include("~/Scripts/jquery.unobtrusive-ajax.min.js"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
+            // for jQuery dataTable Js
+            bundles.Add(new ScriptBundle("~/bundles/datatbljs").Include(
+                "~/Scripts/DataTable/jquery.dataTables.min.js",
+                "~/Scripts/DataTable/dataTables.bootstrap.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
@@ -46,6 +49,10 @@ namespace SMApp.Web
 
             bundles.Add(new StyleBundle("~/Content/jQueryUiCss").Include(
                         "~/Content/themes/base/jquery-ui.min.css"));
+
+            // for jQuery dataTable css
+            bundles.Add(new StyleBundle("~/Content/datatblcss").Include(
+                "~/Content/DataTable/jquery.dataTables.min.css"));
         }
     }
 }

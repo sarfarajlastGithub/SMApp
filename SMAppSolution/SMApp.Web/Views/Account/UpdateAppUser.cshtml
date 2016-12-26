@@ -8,7 +8,7 @@
     @Styles.Render("~/Content/jQueryUiCss")
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("UpdateAppUser", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
