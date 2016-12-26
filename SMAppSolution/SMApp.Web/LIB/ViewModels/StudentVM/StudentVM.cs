@@ -11,7 +11,6 @@ namespace SMApp.Web.LIB.ViewModels.StudentVM
 {
     public class StudentVM
     {
-        public int Id { get; set; }
         public string StudentId { get; set; }
         public string SchoolId { get; set; }
 
@@ -24,6 +23,7 @@ namespace SMApp.Web.LIB.ViewModels.StudentVM
         [Required]
         [Display(Name = "Date of Birth")]
         public string DateOfBirth { get; set; }
+
         [Display(Name = "Previous Education")]
         public string PreEduInfo { get; set; }
 
@@ -52,11 +52,11 @@ namespace SMApp.Web.LIB.ViewModels.StudentVM
         //Address
         [Required]
         [Display(Name = "Address Line 1")]
-        [StringLength(300, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
         public string AddL1 { get; set; }
 
-        [Display(Name = "Address Line 2")]
+
         //[StringLength(300, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
+        [Display(Name = "Address Line 2")]
         public string AddL2 { get; set; }
 
         [Required]

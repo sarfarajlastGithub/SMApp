@@ -222,11 +222,11 @@ namespace SMApp.Web.Controllers
         public ActionResult AddStudent(StudentVM vm)
         {
 
-            //if (!ModelState.IsValid)
-            //{
-            //    ModelState.AddModelError("", "Mandatory fields Are -Name , -Gender, -DateOfBirth, -GuardianName, -Address Line1, -Pin,City,State -Session, -Class, -Section ");
-            //    return View(vm);
-            //}
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Mandatory fields Are -Name , -Gender, -DateOfBirth, -GuardianName, -Address Line1, -Pin,City,State -Session, -Class, -Section ");
+                return View(vm);
+            }
 
             var stId = Guid.NewGuid().ToString();
             //Getting Current
@@ -234,6 +234,10 @@ namespace SMApp.Web.Controllers
             var context = new AppDbContext();
 
             //Checking Exist Students
+            if (String.IsNullOrEmpty(vm.StudentId))
+            {
+                vm.StudentId = "0";
+            }
             if (context.StudentProfiles.Any(s => s.StudentId == vm.StudentId))
             {
                 var student = context.StudentProfiles.First(s => s.StudentId == vm.StudentId);
