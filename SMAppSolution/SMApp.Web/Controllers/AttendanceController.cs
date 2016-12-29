@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json;
 using SMApp.Web.LIB.BL.Attendance;
-using SMApp.Web.LIB.Context;
 using SMApp.Web.LIB.ViewModels;
+using SMApp.Web.LIB.ViewModels.StudentVM;
 
 namespace SMApp.Web.Controllers
 {
@@ -21,6 +17,49 @@ namespace SMApp.Web.Controllers
 
         #endregion
 
+
+
+        public ActionResult ViewAttendance()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult AttendanceListByFiter(string name = "", string tenureyear = "", string stuclass = "", string stuSection = "",string selecteDate="", int jtStartIndex = 0, int jtPageSize = 0, string jtSorting = null)
+        {
+            try
+            {
+                var studentCount = _repository.GetAttendanceCountByFilter(name, tenureyear, stuclass, stuSection,selecteDate);
+                var students = _repository.GetAttendanceByFilter(name, tenureyear, stuclass, stuSection,selecteDate, jtStartIndex, jtPageSize, jtSorting);
+                var stStudents = students.Select(s => new ViewnAttendanceVM
+                {
+                    Name = s.StudentReg.StudentName,
+                    Pdate = DateTimeConvert.GetString(s.PresentDate),
+                    Sclass = s.StudentReg.StuClass.ToString(),
+                    Ssection = s.StudentReg.StuSection.ToString(),
+                    TenureName = s.StudentReg.TenureYear.ToString(),
+                    Status = GetStatus(s.IsPresent)
+                });
+                return Json(new { Result = "OK", Records = stStudents, TotalRecordCount = studentCount });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+
+        private string GetStatus(bool isPresent)
+        {
+            if (isPresent)
+            {
+                return "Present";
+            }
+            else
+            {
+                return "Absent";
+            }
+        }
 
         // GET: Attendance
         #region Student actions
@@ -39,7 +78,7 @@ namespace SMApp.Web.Controllers
             {
                 var present = new Present();
                 await present.PresentStudentData(ms);
-                message = "Success";
+                message = "Attendance Complete";
             }
             catch (Exception ex)
             {
@@ -61,7 +100,16 @@ namespace SMApp.Web.Controllers
             {
                 var studentCount = _repository.GetStudentCountByFilter(name, tenureyear, stuclass, stuSection);
                 var students = _repository.GetStudentsByFilter(name, tenureyear, stuclass, stuSection, jtStartIndex, jtPageSize, jtSorting);
-                return Json(new { Result = "OK", Records = students, TotalRecordCount = studentCount });
+
+                var stStudents = students.Select(s => new ViewnAttendanceVM
+                {
+                    RegId = s.RegId,
+                    Name = s.StudentName,
+                    Sclass = s.StuClass.ToString(),
+                    Ssection = s.StuSection.ToString(),
+                    TenureName = s.TenureYear.ToString()
+                });
+                return Json(new { Result = "OK", Records = stStudents, TotalRecordCount = studentCount });
             }
             catch (Exception ex)
             {

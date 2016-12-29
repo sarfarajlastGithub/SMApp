@@ -16,7 +16,7 @@ namespace SMApp.Web.LIB.ViewModels.StudentVM
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Session / Tenure Year")]
+        [Display(Name = "Session")]
         public TenureYear TenureYear { get; set; }
 
         [Required]
@@ -27,11 +27,11 @@ namespace SMApp.Web.LIB.ViewModels.StudentVM
         [Display(Name = "Section")]
         public SSectionEnum StuSection { get; set; }
 
-        [Display(Name = "Do you want to present / absent Selected Student")]
+        [Display(Name = "Present/Absent")]
         public PresentStatus PresentStatus { get; set; }
 
         
-        [Display(Name = "Select Date for which you want to present")]
+        [Display(Name = "Date")]
         public DateTime SelecteDateTime { get; set; }
     }
 }

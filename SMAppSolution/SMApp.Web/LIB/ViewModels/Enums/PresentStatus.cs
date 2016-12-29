@@ -4,5 +4,7 @@
     {
         Absent = 0,
         Present = 1,
+        AbsentSelectedOnly=2,
+        PresentSelectedOnly=3
     }
 }

@@ -28,19 +28,7 @@ namespace SMApp.Web.LIB.BL.Attendance
         public async Task PresentStudentData(masterStudent ms)
         {
             var context = new AppDbContext();
-            
-
-            //var isPresent = EnumUtil.ParseEnum<PresentStatus>(ms.PresentStatus);
-            //switch (isPresent)
-            //{
-            //    case PresentStatus.Absent:
-            //        DoAbcent(ms);
-            //        break;
-            //    case PresentStatus.Present:
-            //        DoPresent(ms);
-            //        break;
-            //}
-            //Stard
+           
             #region Present Function
             var isPresent = EnumUtil.ParseEnum<PresentStatus>(ms.PresentStatus);
             string jsonString = ms.Ids;
@@ -58,7 +46,7 @@ namespace SMApp.Web.LIB.BL.Attendance
             var allRegisterdStudent = _context.StudentRegs.Where(s => s.SchoolProfileId == crusr &&
                                                 s.TenureYear == tenure &&
                                                 s.StuClass == sclass &&
-                                                s.StuSection == ssection).ToList();
+                                                s.StuSection == ssection && s.IsActive == true).ToList();
 
             //Creating list of Id
             var tempIdList = studentPresentlist.Select(q => q.Id).ToList();
@@ -69,7 +57,53 @@ namespace SMApp.Web.LIB.BL.Attendance
             //Fetch Attendance module
             var attendanceModel = _context.StuAttendances.Where(a => a.SchoolProfileId == crusr).ToList();
             //Create List for Saving new data model at one time
-            List<StuAttendance> attendanceList = null;
+
+
+            if (isPresent == PresentStatus.AbsentSelectedOnly || isPresent == PresentStatus.PresentSelectedOnly)
+            {
+                foreach (var presentStudent in studentPresentlist)
+                {
+                    //Checking that any exist data is here 
+                    // if present
+                    // then Update
+                    //Or Add to a list for Add save changes
+                    if (attendanceModel.Any(a => a.PresentDate == pdate && a.StudentRegId == presentStudent.Id))
+                    {
+                        StuAttendance st = attendanceModel.First(a => a.PresentDate == pdate && a.StudentRegId == presentStudent.Id);
+                        if (isPresent == PresentStatus.AbsentSelectedOnly)
+                        {
+                            st.IsPresent = false;
+                        }
+                        else if (isPresent == PresentStatus.PresentSelectedOnly)
+                        {
+                            st.IsPresent = true;
+                        }
+
+                        //   attendanceList.Add(st);
+                        await _context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        var sa = new StuAttendance();
+                        if (isPresent == PresentStatus.Absent)
+                        {
+                            sa.IsPresent = false;
+                        }
+                        else if (isPresent == PresentStatus.Present)
+                        {
+                            sa.IsPresent = true;
+                        }
+                        sa.PresentDate = pdate;
+                        sa.SchoolProfileId = crusr;
+                        sa.StudentRegId = presentStudent.Id;
+                        _context.StuAttendances.Add(sa);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                return;
+            }
+
 
             //Iterate through All Registered Student 
             //on 

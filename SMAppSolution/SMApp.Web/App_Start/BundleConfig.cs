@@ -30,6 +30,9 @@ namespace SMApp.Web
                 "~/Scripts/DataTable/jquery.dataTables.min.js",
                 "~/Scripts/DataTable/dataTables.bootstrap.js"));
 
+            //For jTable
+            bundles.Add(new ScriptBundle("~/bundles/jTable").Include("~/Scripts/jtable/jquery.jtable.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 

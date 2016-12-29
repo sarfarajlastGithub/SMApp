@@ -242,6 +242,7 @@
     <Compile Include="LIB\ViewModels\StudentVM\StuAttendanceVM.cs" />
     <Compile Include="LIB\ViewModels\StudentVM\StudentSearchVM.cs" />
     <Compile Include="LIB\ViewModels\StudentVM\StudentVM.cs" />
+    <Compile Include="LIB\ViewModels\StudentVM\ViewnAttendanceVM.cs" />
     <Compile Include="Migrations\201612232303085_InitialAfterSchoolModelAdded.cs" />
     <Compile Include="Migrations\201612232303085_InitialAfterSchoolModelAdded.Designer.cs">
       <DependentUpon>201612232303085_InitialAfterSchoolModelAdded.cs</DependentUpon>
@@ -309,6 +310,18 @@
     <Compile Include="Migrations\201612290320275_addAttendancemodel.cs" />
     <Compile Include="Migrations\201612290320275_addAttendancemodel.Designer.cs">
       <DependentUpon>201612290320275_addAttendancemodel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612291805095_addAttendancemodel1.cs" />
+    <Compile Include="Migrations\201612291805095_addAttendancemodel1.Designer.cs">
+      <DependentUpon>201612291805095_addAttendancemodel1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612291808066_addAttendancemodel2.cs" />
+    <Compile Include="Migrations\201612291808066_addAttendancemodel2.Designer.cs">
+      <DependentUpon>201612291808066_addAttendancemodel2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612291809154_addfew.cs" />
+    <Compile Include="Migrations\201612291809154_addfew.Designer.cs">
+      <DependentUpon>201612291809154_addfew.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -596,6 +609,7 @@
     <Content Include="Scripts\jtable\themes\jqueryui\jtable_jqueryui.less" />
     <Content Include="Scripts\jtable\themes\basic\jtable_basic.less" />
     <Content Include="Views\Attendance\PresentStudent.cshtml" />
+    <Content Include="Views\Attendance\ViewAttendance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -656,6 +670,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612290320275_addAttendancemodel.resx">
       <DependentUpon>201612290320275_addAttendancemodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612291805095_addAttendancemodel1.resx">
+      <DependentUpon>201612291805095_addAttendancemodel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612291808066_addAttendancemodel2.resx">
+      <DependentUpon>201612291808066_addAttendancemodel2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612291809154_addfew.resx">
+      <DependentUpon>201612291809154_addfew.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,0 +1,196 @@
+﻿@model SMApp.Web.LIB.ViewModels.StudentVM.StuAttendanceVM
+@{
+    ViewBag.Title = "ViewAttendance";
+    Layout = "~/Views/Shared/_FullLayout.cshtml";
+}
+@section newStyle{
+    <link href="~/Scripts/jtable/themes/metro/blue/jtable.css" rel="stylesheet" />
+    @Styles.Render("~/Content/jQueryUiCss")
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="page-header">Students Attendance</h2>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel-default panel-primary">
+            <div class="panel-heading">Check Present / Absent Status</div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.TenureYear)
+                            @Html.EnumDropDownListFor(m => m.TenureYear, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.TenureYear)
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Stuclass)
+                            @Html.EnumDropDownListFor(m => m.Stuclass, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Stuclass)
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StuSection)
+                            @Html.EnumDropDownListFor(m => m.StuSection, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.StuSection)
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.SelecteDateTime)
+                            @Html.TextBoxFor(m => m.SelecteDateTime, new { @class = "form-control", placeholder = "Select Date" })
+                            @Html.ValidationMessageFor(m => m.SelecteDateTime)
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Name)
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Name)
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="LoadRecordsButton">Get Present List</label>
+                            <button type="submit" id="LoadRecordsButton" class="btn btn-success">Load Records</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="panel-primary panel">
+            <div class="panel-heading">Present List</div>
+            <div class="panel-body">
+                <div class="col-md-8">
+                    <div id="StudentAttendanceContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section anyscripts {
+    @Scripts.Render("~/bundles/jQueryUiJs")
+    @Scripts.Render("~/bundles/jTable")
+
+    <script>
+        $(function () {
+
+            //For datePicker
+            $("#SelecteDateTime")
+                .datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'dd-MM-yy',
+                    maxDate: "+11M"
+                });
+
+            //Here for loading table
+
+            //Prepare jtable plugin
+            $('#StudentAttendanceContainer')
+                .jtable({
+                    title: 'Student List',
+                    paging: true,
+                    sorting: true,
+                    defaultSorting: 'Name ASC',
+                    selecting: false, //Enable selecting
+                    multiselect: false, //Allow multiple selecting
+                    selectingCheckboxes: false, //Show checkboxes on first column
+                    //selectOnRowClick: false, //Enable this to only select using checkboxes
+                    actions: {
+                        listAction: '@Url.Action("AttendanceListByFiter")'
+
+                    },
+                    fields: {
+                        Name: {
+                            title: 'Name',
+                            width: '40%',
+                            inputClass: 'validate[required]'
+                        },
+                        Sclass: {
+                            title: 'Class',
+                            width: '30%',
+                            inputClass: 'validate[required]'
+                        },
+                        Ssection: {
+                            title: 'Section',
+                            width: '30%',
+                            inputClass: 'validate[required]'
+                        },
+                        TenureName: {
+                            title: 'Session',
+                            width: '30%',
+                            inputClass: 'validate[required]'
+                        },
+                        Pdate: {
+                            title: 'Date on',
+                            width: '30%',
+                            inputClass: 'validate[required]'
+                        },
+                        Status: {
+                            title: 'IsPrasent',
+                            width: '30%',
+                            inputClass: 'validate[required]'
+                        }
+
+                    }
+                });
+
+            //Re-load records when user click 'load records' button.
+            $('#LoadRecordsButton')
+                .click(function (e) {
+                    e.preventDefault();
+                    var tYear = $('#TenureYear').val();
+                    var sClass = $('#Stuclass').val();
+                    var sSection = $('#StuSection').val();
+                    var selecteDateTime = $('#SelecteDateTime').val();
+
+                    if (tYear === "0" || sClass === "0" || sSection === "0") {
+                        alert("Atleast Select 1.Session, 2.Class and 3.Section");
+                        return;
+                    }
+                    $('#StudentAttendanceContainer')
+                        .jtable('load',
+                        {
+                            TenureYear: $('#TenureYear').val(),
+                            Stuclass: $('#Stuclass').val(),
+                            Name: $('#Name').val(),
+                            StuSection: $('#StuSection').val(),
+                            selecteDate: selecteDateTime
+                        });
+                });
+
+            //Load all records when page is first shown
+            //$('#LoadRecordsButton').click();
+
+            //Load student list from server
+            //$('#StudentTableContainer').jtable('load');
+
+
+
+            //End of jTable
+
+
+            var $ptrs = $('table tr').contains("Present");
+            var $atrs = $('table tr').contains("Absent");
+
+            $ptrs.each(function () {
+                var foo = this.style("background-color", "green");
+            });
+            $atrs.each(function () {
+                var foo = this.style("background-color", "red");
+            });
+
+
+
+        });
+    </script>
+}

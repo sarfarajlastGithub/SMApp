@@ -13,7 +13,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Students Attendance</h1>
+        <h3 class="page-header">Students Attendance</h3>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -24,81 +24,82 @@
             <div class="panel-heading">Search particular student or Just check in to Present / Absent</div>
             <div class="panel-body">
                 <div class="col-md-12">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             @Html.LabelFor(m => m.TenureYear)
                             @Html.EnumDropDownListFor(m => m.TenureYear, TenureYear.T2017.ToString(), new {@class = "form-control"})
                             @Html.ValidationMessageFor(m => m.TenureYear)
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Stuclass)
                             @Html.EnumDropDownListFor(m => m.Stuclass, new {@class = "form-control"})
                             @Html.ValidationMessageFor(m => m.Stuclass)
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             @Html.LabelFor(m => m.StuSection)
                             @Html.EnumDropDownListFor(m => m.StuSection, new {@class = "form-control"})
                             @Html.ValidationMessageFor(m => m.StuSection)
                         </div>
                     </div>
-                    <div class="col-md-3"></div>
                     <div class="col-md-3">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Name)
-                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Name, new {@class = "form-control"})
                             @Html.ValidationMessageFor(m => m.Name)
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="LoadRecordsButton">Get Student List</label>
-                            <button type="submit" id="LoadRecordsButton">Load Records</button>
+                            <button type="submit" id="LoadRecordsButton" class="btn btn-success btn-default" >Load Records</button>
                         </div>
                     </div>
                 </div>
+                <hr/>
+                <br/>
+                <br/>
                 @* End Search Option *@
-                <div class="col-md-12">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.PresentStatus)
-                            @Html.EnumDropDownListFor(m => m.PresentStatus, "Select to Absent / Present", new {@class = "form-control"})
-                            @Html.ValidationMessageFor(m => m.PresentStatus)
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.SelecteDateTime)
-                            @Html.TextBoxFor(m => m.SelecteDateTime, new { @class = "form-control", placeholder="Select Date" })
-                            @Html.ValidationMessageFor(m => m.SelecteDateTime)
-                        </div>
-                    </div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-3"></div>
 
-                </div>
                 @* Start Check box table *@
                 <div class="col-md-12">
-                    <h2> Select Student</h2>
-                    <div class="col-md-6">
+                    <h4> Select Student</h4>
+                    <div class="col-md-6" style="height: 300px; overflow: scroll;">
                         <!-- Container for jTable -->
                         <div id="StudentTableContainer"></div>
 
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5 col-lg-offset-1" style="border-left: 6px solid green; background-color: lightgrey; height: 300px; overflow: scroll;">
                         <div id="SelectedRowList">
                             No Student selected for attendance! Select rows to see here...
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <br/>
-                    <button id="PresentAllButton" class="btn btn-success btn-default">Present all selected records</button>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PresentStatus)
+                            @Html.EnumDropDownListFor(m => m.PresentStatus, "Select to Absent / Present", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.PresentStatus)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.SelecteDateTime)
+                            @Html.TextBoxFor(m => m.SelecteDateTime, new { @class = "form-control", placeholder = "Select Date" })
+                            @Html.ValidationMessageFor(m => m.SelecteDateTime)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="PresentButton">Present Record</label>
+                        <button id="PresentButton" class="btn form-control" style="background-color: green; color: white;">Present</button>
+                    </div>
+                    <div class="col-md-3"></div>
                 </div>
-                <div id="jesndata"></div>
+
             </div>
         </div>
 
@@ -106,9 +107,8 @@
 </div>
 
 @section anyscripts {
-    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jQueryUiJs")
-    <script src="~/Scripts/jtable/jquery.jtable.js"></script>
+    @Scripts.Render("~/bundles/jTable")
 
     <script>
         $(function() {
@@ -143,22 +143,22 @@
 
                             list: false
                         },
-                        StudentName: {
+                        Name: {
                             title: 'Name',
                             width: '23%',
                             inputClass: 'validate[required]'
                         },
-                        StuClass: {
+                        Sclass: {
                             title: 'Class',
                             width: '23%',
                             inputClass: 'validate[required]'
                         },
-                        StuSection: {
+                        Ssection: {
                             title: 'Section',
                             width: '23%',
                             inputClass: 'validate[required]'
                         },
-                        TenureYear: {
+                        TenureName: {
                             title: 'Session',
                             width: '23%',
                             inputClass: 'validate[required]'
@@ -177,9 +177,11 @@
                                 $('#SelectedRowList')
                                     .append(
                                         '<b>Name: </b>: ' +
-                                        record.StudentName +
+                                        record.Name +
                                         '<b> Class:</b>:' +
-                                        record.StuClass +
+                                        record.Sclass +
+                                        '<b> Section:</b>:' +
+                                        record.Ssection +
                                         '<br /><br />'
                                     );
                             });
@@ -194,6 +196,14 @@
             $('#LoadRecordsButton')
                 .click(function(e) {
                     e.preventDefault();
+                    var tYear = $('#TenureYear').val();
+                    var sClass = $('#Stuclass').val();
+                    var sSection = $('#StuSection').val();
+
+                    if (tYear === "" || sClass ==="0" || sSection ==="0") {
+                        alert("Atleast Select 1.Session, 2.Class and 3.Section");
+                        return;
+                    }
                     $('#StudentTableContainer')
                         .jtable('load',
                         {
@@ -205,15 +215,23 @@
                 });
 
             //Load all records when page is first shown
-            $('#LoadRecordsButton').click();
+            //$('#LoadRecordsButton').click();
 
             //Load student list from server
             //$('#StudentTableContainer').jtable('load');
 
             //Present selected students
-            $('#PresentAllButton')
+            $('#PresentButton')
                 .button()
-                .click(function() {
+                .click(function () {
+                    var date = $("#SelecteDateTime").val();
+                    var pStatus = $('#PresentStatus').val();
+                    if (date === "" || pStatus === "") {
+                        alert("" +
+                            "Select Date And Status");
+                        return;
+                    }
+
                     var $selectedRows = $('#StudentTableContainer').jtable('selectedRows');
 
                     var masterStudent = {
@@ -230,10 +248,10 @@
                             //contact.ContactID.push(record.RegId);
                             var item = {};
                             item["id"] = record.RegId;
-                            item["name"] = record.StudentName;
-                            item["tyear"] = record.TenureYear;
-                            item["stuClass"] = record.StuClass;
-                            item["stuSection"] = record.StuSection;
+                            item["name"] = record.Name;
+                            item["tyear"] = record.TenureName;
+                            item["stuClass"] = record.Sclass;
+                            item["stuSection"] = record.Ssection;
                             studentIdName.push(item);
                         });
                         //JSON.stringify(studentIdName) this for Converting JSON to string to send data as a string
@@ -258,7 +276,7 @@
 
                     } else {
                         //No rows selected
-                        $('#SelectedRowList').append('No Student selected! Select rows to see here...');
+                        $('#SelectedRowList').html('No Student selected! Select rows to see here...');
                     }
 
                     //$('#StudentTableContainer').jtable('deleteRows', $selectedRowss);
