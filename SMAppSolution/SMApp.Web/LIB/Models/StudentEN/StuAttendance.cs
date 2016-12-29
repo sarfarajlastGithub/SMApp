@@ -9,6 +9,7 @@ namespace SMApp.Web.LIB.Models.StudentEN
     {
         public int Id { get; set; }
 
+        public string SchoolProfileId { get; set; }
         public string StudentRegId { get; set; }
         public DateTime? PresentDate { get; set; }
         public bool IsPresent { get; set; }

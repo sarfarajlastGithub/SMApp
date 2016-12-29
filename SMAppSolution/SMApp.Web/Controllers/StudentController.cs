@@ -180,17 +180,19 @@ namespace SMApp.Web.Controllers
                 return View("StudentSearch");
             }
 
-            StudentReg streg = new StudentReg();
-            streg.RegId = Guid.NewGuid().ToString();
-            streg.AdmissioinDate = DateTimeConvert.GetDate(vm.AdmissioinDate);
-            streg.ClubName = vm.ClubName;
-            streg.StudentProfileId = vm.StudentProfileId;
-            streg.StudentName = vm.Name;
-            streg.IsActive = vm.IsActive;
-            streg.TenureYear = vm.TenureYear;
-            streg.StuClass = vm.Stuclass;
-            streg.StuSection = vm.StuSection;
-            streg.SchoolProfileId = vm.SchoolId;
+            StudentReg streg = new StudentReg
+            {
+                RegId = Guid.NewGuid().ToString(),
+                AdmissioinDate = DateTimeConvert.GetDate(vm.AdmissioinDate),
+                ClubName = vm.ClubName,
+                StudentProfileId = vm.StudentProfileId,
+                StudentName = vm.Name,
+                IsActive = vm.IsActive,
+                TenureYear = vm.TenureYear,
+                StuClass = vm.Stuclass,
+                StuSection = vm.StuSection,
+                SchoolProfileId = vm.SchoolId
+            };
 
             context.StudentRegs.Add(streg);
             context.SaveChanges();

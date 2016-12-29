@@ -1,0 +1,272 @@
+﻿@using System.Web.Mvc.Html
+@using SMApp.Web.LIB.ViewModels.Enums
+@model SMApp.Web.LIB.ViewModels.StudentVM.StuAttendanceVM
+@{
+    ViewBag.Title = "PresentStudent";
+    Layout = "~/Views/Shared/_FullLayout.cshtml";
+}
+
+@section newStyle{
+<link href="~/Scripts/jtable/themes/metro/blue/jtable.css" rel="stylesheet" />
+    @Styles.Render("~/Content/jQueryUiCss")
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Students Attendance</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel-default panel-green">
+            <div class="panel-heading">Search particular student or Just check in to Present / Absent</div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.TenureYear)
+                            @Html.EnumDropDownListFor(m => m.TenureYear, TenureYear.T2017.ToString(), new {@class = "form-control"})
+                            @Html.ValidationMessageFor(m => m.TenureYear)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Stuclass)
+                            @Html.EnumDropDownListFor(m => m.Stuclass, new {@class = "form-control"})
+                            @Html.ValidationMessageFor(m => m.Stuclass)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.StuSection)
+                            @Html.EnumDropDownListFor(m => m.StuSection, new {@class = "form-control"})
+                            @Html.ValidationMessageFor(m => m.StuSection)
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Name)
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Name)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="LoadRecordsButton">Get Student List</label>
+                            <button type="submit" id="LoadRecordsButton">Load Records</button>
+                        </div>
+                    </div>
+                </div>
+                @* End Search Option *@
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PresentStatus)
+                            @Html.EnumDropDownListFor(m => m.PresentStatus, "Select to Absent / Present", new {@class = "form-control"})
+                            @Html.ValidationMessageFor(m => m.PresentStatus)
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.SelecteDateTime)
+                            @Html.TextBoxFor(m => m.SelecteDateTime, new { @class = "form-control", placeholder="Select Date" })
+                            @Html.ValidationMessageFor(m => m.SelecteDateTime)
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3"></div>
+
+                </div>
+                @* Start Check box table *@
+                <div class="col-md-12">
+                    <h2> Select Student</h2>
+                    <div class="col-md-6">
+                        <!-- Container for jTable -->
+                        <div id="StudentTableContainer"></div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div id="SelectedRowList">
+                            No Student selected for attendance! Select rows to see here...
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <br/>
+                    <button id="PresentAllButton" class="btn btn-success btn-default">Present all selected records</button>
+                </div>
+                <div id="jesndata"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section anyscripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jQueryUiJs")
+    <script src="~/Scripts/jtable/jquery.jtable.js"></script>
+
+    <script>
+        $(function() {
+            $("#SelecteDateTime")
+                .datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'dd-MM-yy',
+                    maxDate: "+11M"
+                });
+
+            //Here for loading table
+
+            //Prepare jtable plugin
+            $('#StudentTableContainer')
+                .jtable({
+                    title: 'Student List',
+                    paging: false,
+                    sorting: true,
+                    defaultSorting: 'Name ASC',
+                    selecting: true, //Enable selecting
+                    multiselect: true, //Allow multiple selecting
+                    selectingCheckboxes: true, //Show checkboxes on first column
+                    //selectOnRowClick: false, //Enable this to only select using checkboxes
+                    actions: {
+                        listAction: '@Url.Action("StudentListByFiter")'
+
+                    },
+                    fields: {
+                        RegId: {
+                            key: true,
+
+                            list: false
+                        },
+                        StudentName: {
+                            title: 'Name',
+                            width: '23%',
+                            inputClass: 'validate[required]'
+                        },
+                        StuClass: {
+                            title: 'Class',
+                            width: '23%',
+                            inputClass: 'validate[required]'
+                        },
+                        StuSection: {
+                            title: 'Section',
+                            width: '23%',
+                            inputClass: 'validate[required]'
+                        },
+                        TenureYear: {
+                            title: 'Session',
+                            width: '23%',
+                            inputClass: 'validate[required]'
+                        }
+                    },
+                    //Register to selectionChanged event to hanlde events
+                    selectionChanged: function() {
+                        //Get all selected rows
+                        var $selectedRows = $('#StudentTableContainer').jtable('selectedRows');
+
+                        $('#SelectedRowList').empty();
+                        if ($selectedRows.length > 0) {
+                            //Show selected rows
+                            $selectedRows.each(function() {
+                                var record = $(this).data('record');
+                                $('#SelectedRowList')
+                                    .append(
+                                        '<b>Name: </b>: ' +
+                                        record.StudentName +
+                                        '<b> Class:</b>:' +
+                                        record.StuClass +
+                                        '<br /><br />'
+                                    );
+                            });
+                        } else {
+                            //No rows selected
+                            $('#SelectedRowList').append('No Student selected! Select rows to see here...');
+                        }
+                    }
+                });
+
+            //Re-load records when user click 'load records' button.
+            $('#LoadRecordsButton')
+                .click(function(e) {
+                    e.preventDefault();
+                    $('#StudentTableContainer')
+                        .jtable('load',
+                        {
+                            TenureYear: $('#TenureYear').val(),
+                            Stuclass: $('#Stuclass').val(),
+                            Name: $('#Name').val(),
+                            StuSection: $('#StuSection').val()
+                        });
+                });
+
+            //Load all records when page is first shown
+            $('#LoadRecordsButton').click();
+
+            //Load student list from server
+            //$('#StudentTableContainer').jtable('load');
+
+            //Present selected students
+            $('#PresentAllButton')
+                .button()
+                .click(function() {
+                    var $selectedRows = $('#StudentTableContainer').jtable('selectedRows');
+
+                    var masterStudent = {
+                        pdate: $('#SelecteDateTime').val(),
+                        presentStatus: $('#PresentStatus').val(),
+                        Ids : ""
+                    }
+
+                    var studentIdName = [];
+                    if ($selectedRows.length > 0) {
+                        //Show selected rows
+                        $selectedRows.each(function() {
+                            var record = $(this).data('record');
+                            //contact.ContactID.push(record.RegId);
+                            var item = {};
+                            item["id"] = record.RegId;
+                            item["name"] = record.StudentName;
+                            item["tyear"] = record.TenureYear;
+                            item["stuClass"] = record.StuClass;
+                            item["stuSection"] = record.StuSection;
+                            studentIdName.push(item);
+                        });
+                        //JSON.stringify(studentIdName) this for Converting JSON to string to send data as a string
+                        masterStudent.Ids = JSON.stringify(studentIdName);
+                        //Present Student
+                        $.ajax({
+                            url: '/Attendance/PresentStudent',
+                            type: 'POST',
+                            data: masterStudent,
+                            dataType: 'json',
+                            success: function(data) {
+                                alert(data.message);
+                                //if (data.status) {
+
+                                //}
+                            },
+                            error: function() {
+                                $('#msg').html('<div class="failed">Error! Please try again.</div>');
+                            }
+                        });
+                        console.log(studentIdName);
+
+                    } else {
+                        //No rows selected
+                        $('#SelectedRowList').append('No Student selected! Select rows to see here...');
+                    }
+
+                    //$('#StudentTableContainer').jtable('deleteRows', $selectedRowss);
+                    //$('#jesndata').html($selectedRowss.serializeArray());
+
+                });
+
+            //End of jTable
+        });
+    </script>
+}
