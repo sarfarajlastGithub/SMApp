@@ -11,11 +11,8 @@
 @using (Html.BeginForm("AddStudent", "Student", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-
     <div class="form-horizontal">
         <hr />
-
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-green">
@@ -47,8 +44,6 @@
                                                 @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
                                             </div>
                                         </div>
-
-
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.Gender, htmlAttributes: new {@class = "control-label col-md-2"})
                                             <div class="col-md-10">
@@ -56,7 +51,6 @@
                                                 @Html.ValidationMessageFor(model => model.Gender, "", new {@class = "text-danger"})
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new {@class = "control-label col-md-2"})
                                             <div class="col-md-10">
@@ -64,7 +58,6 @@
                                                 @Html.ValidationMessageFor(model => model.DateOfBirth, "", new {@class = "text-danger"})
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.PreEduInfo, htmlAttributes: new {@class = "control-label col-md-2"})
                                             <div class="col-md-10">
@@ -72,7 +65,6 @@
                                                 @Html.ValidationMessageFor(model => model.PreEduInfo, "", new {@class = "text-danger"})
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.AdmissioinDate, htmlAttributes: new {@class = "control-label col-md-2"})
                                             <div class="col-md-10">
@@ -80,7 +72,6 @@
                                                 @Html.ValidationMessageFor(model => model.AdmissioinDate, "", new {@class = "text-danger"})
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="panel-footer">
                                         <a class="btn btn-info" href="/Student/StudentSearch">Back To Search</a>
@@ -103,7 +94,6 @@
                                                 @Html.ValidationMessageFor(model => model.GuardianName, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.GuardianMobile, htmlAttributes: new { @class = "control-label col-md-2" })
                                             <div class="col-md-10">
@@ -118,7 +108,6 @@
                                                 @Html.ValidationMessageFor(model => model.GuardialEmail, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.GuardianQualification, htmlAttributes: new { @class = "control-label col-md-2" })
                                             <div class="col-md-10">
@@ -212,7 +201,7 @@
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.TenureYear, htmlAttributes: new { @class = "control-label col-md-2" })
                                             <div class="col-md-10">
-                                                @Html.EnumDropDownListFor(model => model.TenureYear, new { @class = "form-control" })
+                                                @Html.EnumDropDownListFor(model => model.TenureYear,"Select Sessoin", new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.TenureYear, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -220,7 +209,7 @@
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.Stuclass, htmlAttributes: new { @class = "control-label col-md-2" })
                                             <div class="col-md-10">
-                                                @Html.EnumDropDownListFor(model => model.Stuclass, new { @class = "form-control" })
+                                                @Html.EnumDropDownListFor(model => model.Stuclass,"Select Class", new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.Stuclass, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -228,15 +217,29 @@
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.StuSection, htmlAttributes: new { @class = "control-label col-md-2" })
                                             <div class="col-md-10">
-                                                @Html.EnumDropDownListFor(model => model.StuSection, htmlAttributes: new { @class = "form-control" })
+                                                @Html.EnumDropDownListFor(model => model.StuSection,"Select Section", htmlAttributes: new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.StuSection, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.ClubName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            @Html.LabelFor(model => model.ClubName, htmlAttributes: new {@class = "control-label col-md-2"})
                                             <div class="col-md-10">
-                                                @Html.EnumDropDownListFor(model => model.ClubName, htmlAttributes: new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.ClubName, "", new { @class = "text-danger" })
+                                                @Html.EnumDropDownListFor(model => model.ClubName,"Select Club", htmlAttributes: new {@class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.ClubName, "", new {@class = "text-danger"})
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.RolNo, htmlAttributes: new {@class = "control-label col-md-2"})
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.RolNo, htmlAttributes: new {@class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.RolNo, "", new {@class = "text-danger"})
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-10">
+
+                                                <div id="suj"></div>
+                                                <div id="msg"></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -250,7 +253,7 @@
                                     <div class="panel-footer">
                                         <div class="form-group">
                                             <div class="col-md-offset-2 col-md-10">
-                                                <input type="submit" value="Save" class="btn btn-default btn-success" />
+                                                <input id="save" type="submit" value="Save" class="btn btn-default btn-success" />
                                             </div>
                                         </div>
                                     </div>
@@ -275,6 +278,9 @@
     @Scripts.Render("~/bundles/jQueryUiJs")
     <script>
         $(function () {
+            var rolValue = $("#RolNo");
+            var save = $("#save");
+            save.hide();
             $("#DateOfBirth").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -286,6 +292,60 @@
                 changeYear: true,
                 dateFormat: 'dd-MM-yy'
             });
+
+            $("#Stuclass")
+                .change(function() {
+                    rolValue.val("");
+                    $("#suj").html("");
+                });
+            $("#StuSection")
+                .change(function() {
+                    rolValue.val("");
+                    $("#suj").html("");
+                });
+
+            //Checking And putting Roll Number
+            $("#RolNo").on('input propertychange paste', function () {
+
+
+                var sClass = $("#Stuclass").val();
+                var sSection = $("#StuSection").val();
+
+                var rolClass = {
+                    rol : rolValue.val(),
+                    sclass: sClass,
+                    ssection: sSection
+                };
+
+                if (sSection == 0 || sClass == 0 || rolValue.val() == "") {
+                    alert("Pleasr Select Class and Section. And then Choose roll Number");
+                    rolValue.val("");
+                    return;
+                }
+                $.ajax({
+                    url: "/Student/DoesUserRollExist",
+                    type: "post",
+                    data: rolClass,
+                    dataType: "json",
+                    success: function(data) {
+
+                        if (data.existRoll === true) {
+                            save.hide();
+                            $("#suj").html('<div style="color:green;">Suggestion roll: ' + data.newRoll+'</div>');
+                            $('#msg').html('<div style="color: red;">Roll -'+rolValue.val()+' is already exist in Class: ' + data.cl + ' and ' + data.sc + ' .</div>');
+                        } else {
+                            $('#msg').html('');
+                            $("#suj").html('<div style="color:green;">Great! Student Roll is: ' + rolValue.val() + '</div>');
+                            save.show();
+                        }
+                    },
+                    error: function() {
+                        $('#msg').html('<div style="color: red;">Error! Please try again.</div>');
+                    }
+                });
+
+            });
+
         });
     </script>
 }

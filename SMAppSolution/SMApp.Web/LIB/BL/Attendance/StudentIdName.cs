@@ -7,5 +7,6 @@ namespace SMApp.Web.LIB.BL.Attendance
         public string Tyear { get; set; }
         public string StuClass { get; set; }
         public string StuSection { get; set; }
+        public string RolNo { get; set; }
     }
 }

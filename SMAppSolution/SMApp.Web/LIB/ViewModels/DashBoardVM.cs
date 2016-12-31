@@ -11,20 +11,23 @@ namespace SMApp.Web.LIB.ViewModels
 {
     public class DashBoardVM
     {
+        public DashBoardVM()
+        {
+            _isComplete = false;
+            var ob = new GetAppUserInfo();
+            _isComplete = ob.CurrentAppUser.IsComplete;
+            IsProfileComplete = _isComplete;
+        }
         
-        private bool _isComplete;
+        private readonly bool _isComplete;
         public bool IsProfileComplete
         {
             get { return _isComplete; }
-            private set
-            {
-                _isComplete = false;
-                var ob = new GetAppUserInfo();
-                _isComplete = ob.CurrentAppUser.IsComplete;
-            }
+            private set{}
         }
 
         public string StudentCount { get; set; }
+        public string ColorClass { get; set; }
     }
 
 }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using SMApp.Web.LIB.Models.StudentEN;
-using SMApp.Web.LIB.ViewModels.Enums;
+﻿using SMApp.Web.LIB.ViewModels.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace SMApp.Web.LIB.ViewModels.StudentVM
 {
@@ -13,6 +8,9 @@ namespace SMApp.Web.LIB.ViewModels.StudentVM
     {
 
         public string RegId { get; set; }
+
+        [Display(Name = "Roll No")]
+        public string RolNo { get; set; }
         public string StudentId { get; set; }
         public string SchoolId { get; set; }
 

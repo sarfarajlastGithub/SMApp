@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using SMApp.Web.LIB.ViewModels;
 using SMApp.Web.LIB.ViewModels.Enums;
 using SMApp.Web.LIB.ViewModels.StudentVM;
 using System.Linq.Dynamic;
+using System.Threading;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using SMApp.Web.LIB.Context;
 using SMApp.Web.LIB.Models.StudentEN;
@@ -117,13 +117,13 @@ namespace SMApp.Web.Controllers
             recordsTotal = v.Count();
             var data = v.Skip(skip).Take(pageSize).Select(s => new StudentSearchVM
             {
-
                 StudentRegId = s.RegId,
                 StudentName = s.StudentName,
                 StuClassString = s.StuClass.ToString(),
                 StuSectionString = s.StuSection.ToString(),
                 TenureNameString = s.TenureYear.ToString(),
                 IsActive = s.IsActive,
+                RolNo = s.RolNo
 
             }).ToList();
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data },
@@ -158,6 +158,7 @@ namespace SMApp.Web.Controllers
             vm.StudentProfileId = stuReg.StudentProfileId;
             vm.Name = stuReg.StudentName;
             vm.SchoolId = stuReg.SchoolProfileId;
+            vm.RolNo = stuReg.RolNo;
 
             return View(vm);
         }
@@ -176,6 +177,7 @@ namespace SMApp.Web.Controllers
                 studentReg.IsActive = vm.IsActive;
                 studentReg.AdmissioinDate = DateTimeConvert.GetDate(vm.AdmissioinDate);
                 studentReg.ClubName = vm.ClubName;
+                studentReg.RolNo = vm.RolNo;
                 context.SaveChanges();
                 return View("StudentSearch");
             }
@@ -191,7 +193,8 @@ namespace SMApp.Web.Controllers
                 TenureYear = vm.TenureYear,
                 StuClass = vm.Stuclass,
                 StuSection = vm.StuSection,
-                SchoolProfileId = vm.SchoolId
+                SchoolProfileId = vm.SchoolId,
+                RolNo = vm.RolNo
             };
 
             context.StudentRegs.Add(streg);
@@ -260,13 +263,12 @@ namespace SMApp.Web.Controllers
             student.StuSection = vm1.StuSection;
             student.TenureYear = vm1.TenureYear;
             student.IsActive = vm1.IsActive;
-            student.AdmissioinDate = DateTimeConvert.GetString(vm1.AdmissioinDate);
+            student.AdmissioinDate = DateTimeConvert.GetString(vm1.AdmissioinDate) ??  DateTimeConvert.GetString(DateTime.Now);
             student.ClubName = vm1.ClubName;
-
+            student.RolNo = vm1.RolNo;
 
             //Fetch student profile data from student profile id of registration table
             var vm = context.StudentProfiles.Include(x => x.Address).First(s => s.StudentId == vm1.StudentProfileId);
-
 
             student.StudentId = vm.StudentId;
             student.StudentProfileId = vm.StudentId;
@@ -294,10 +296,19 @@ namespace SMApp.Web.Controllers
 
         public ActionResult AddStudent(string id)
         {
-
             if (string.IsNullOrEmpty(id))
             {
-                return View();
+                //int nrolNo = 0;
+                //var context = new AppDbContext();
+                //var firstOrDefault = context.StudentRegs.OrderByDescending(s => s.Id).FirstOrDefault();
+                //if (firstOrDefault != null)
+                //{
+                //    nrolNo = Convert.ToInt32(firstOrDefault.RolNo);
+                //}
+                StudentVM vm = new StudentVM();
+                vm.AdmissioinDate = DateTimeConvert.GetString(DateTime.Now);
+                //vm.RolNo = (nrolNo + 1).ToString();
+                return View(vm);
             }
             return View(GetStudentVmData(id));
         }
@@ -420,5 +431,42 @@ namespace SMApp.Web.Controllers
 
             return View("StudentSearch");
         }
+
+
+        [HttpPost]
+        // ReSharper disable once InconsistentNaming
+        public ActionResult DoesUserRollExist(RolClass RolNo)
+        {
+            //Thread.Sleep(2000);
+            var crid = User.Identity.GetUserId();
+            SClass cl = 0;
+            if (RolNo.Sclass != null)
+            {
+                cl = EnumUtil.ParseEnum<SClass>(RolNo.Sclass);
+            }
+            SSectionEnum sc = 0;
+            if (RolNo.Sclass != null)
+            {
+                sc = EnumUtil.ParseEnum<SSectionEnum>(RolNo.Ssection);
+            }
+
+                var context = new AppDbContext();
+                //Finding any exist roll
+                bool existRoll = context.StudentRegs.Any(s => s.SchoolProfileId == crid && s.RolNo == RolNo.Rol && s.StuClass == cl && s.StuSection == sc );
+
+            //Finding Next roll could be
+            string newRoll = "1";
+            if (existRoll)
+            {
+                var roll = context.StudentRegs.Where(s => s.SchoolProfileId == crid && s.StuClass == cl && s.StuSection == sc)
+                    .OrderByDescending(s => s.Id).First();
+                newRoll = (Convert.ToInt32(roll.RolNo) + 1).ToString();
+
+            }
+
+            return Json(new {existRoll = existRoll, newRoll= newRoll, cl = cl.ToString() , sc = sc.ToString()});
+
+        }
+
     }
 }

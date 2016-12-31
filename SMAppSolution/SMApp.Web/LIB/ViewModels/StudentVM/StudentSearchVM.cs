@@ -12,6 +12,8 @@ namespace SMApp.Web.LIB.ViewModels.StudentVM
 
         public string StudentName { get; set; }
 
+        public string RolNo { get; set; }
+
         public SClass StuClass { get; set; }
 
         public SSectionEnum StuSection { get; set; }

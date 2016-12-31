@@ -13,6 +13,8 @@ namespace SMApp.Web.LIB.ViewModels.StudentVM
         public DateTime? PresentDate { get; set; }
         public bool IsPresent { get; set; }
 
+        public string RolNo { get; set; }
+
         public string Name { get; set; }
 
         [Required]

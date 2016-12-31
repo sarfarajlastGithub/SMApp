@@ -47,7 +47,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Board, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(m => m.Board, new { @class = "form-control" })
+                @Html.EnumDropDownListFor(m => m.Board,"Select Board", new { @class = "form-control" })
             </div>
         </div>
     </div>
@@ -56,19 +56,19 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Medium, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(m => m.Medium, new { @class = "form-control" })
+                @Html.EnumDropDownListFor(m => m.Medium,"Select Medium", new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.City, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(m => m.City, new { @class = "form-control" })
+                @Html.EnumDropDownListFor(m => m.City,"Select City" , new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.State, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(m => m.State, new { @class = "form-control" })
+                @Html.EnumDropDownListFor(m => m.State,"Select State", new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">

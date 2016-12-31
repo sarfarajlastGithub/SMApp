@@ -14,5 +14,6 @@ namespace SMApp.Web.LIB.ViewModels.StudentVM
         public string Ssection { get; set; }
         public string Pdate { get; set; }
         public string Status { get; set; }
+        public string RolNo { get; set; }
     }
 }

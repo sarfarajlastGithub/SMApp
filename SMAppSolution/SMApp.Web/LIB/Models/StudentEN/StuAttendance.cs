@@ -15,6 +15,8 @@ namespace SMApp.Web.LIB.Models.StudentEN
 
         [Required]
         public string StudentRegId { get; set; }
+
+        public string RolNo { get; set; }
         public DateTime? PresentDate { get; set; }
         public bool IsPresent { get; set; }
     }

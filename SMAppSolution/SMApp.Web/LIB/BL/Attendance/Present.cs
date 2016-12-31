@@ -96,6 +96,7 @@ namespace SMApp.Web.LIB.BL.Attendance
                         sa.PresentDate = pdate;
                         sa.SchoolProfileId = crusr;
                         sa.StudentRegId = presentStudent.Id;
+                        sa.RolNo = presentStudent.RolNo;
                         _context.StuAttendances.Add(sa);
                     }
                 }
@@ -145,6 +146,7 @@ namespace SMApp.Web.LIB.BL.Attendance
                     sa.PresentDate = pdate;
                     sa.SchoolProfileId = crusr;
                     sa.StudentRegId = presentStudent.Id;
+                    sa.RolNo = presentStudent.RolNo;
                     _context.StuAttendances.Add(sa);
                 }
             }
@@ -184,6 +186,7 @@ namespace SMApp.Web.LIB.BL.Attendance
                     sa.PresentDate = pdate;
                     sa.SchoolProfileId = crusr;
                     sa.StudentRegId = presentStudent.RegId;
+                    sa.RolNo = presentStudent.RolNo;
                     _context.StuAttendances.Add(sa);
                 }
             }
@@ -196,82 +199,79 @@ namespace SMApp.Web.LIB.BL.Attendance
             //End
         }
 
-        private async void DoPresent(masterStudent ms)
-        {
-            
-        }
+       
 
-        private async void DoAbcent(masterStudent ms)
-        {
-            string jsonString = ms.Ids;
-            DateTime? pdate = DateTimeConvert.GetDate(ms.Pdate);
+        //private async void DoAbcent(masterStudent ms)
+        //{
+        //    string jsonString = ms.Ids;
+        //    DateTime? pdate = DateTimeConvert.GetDate(ms.Pdate);
 
-            //Student present
-            var studentAbsentlist = JsonConvert.DeserializeObject<List<StudentIdName>>(jsonString);
-            var crusr = _crUserInfo.CurrentUserId;
+        //    //Student present
+        //    var studentAbsentlist = JsonConvert.DeserializeObject<List<StudentIdName>>(jsonString);
+        //    var crusr = _crUserInfo.CurrentUserId;
 
-            var sclass = EnumUtil.ParseEnum<SClass>(studentAbsentlist[0].StuClass);
-            var ssection = EnumUtil.ParseEnum<SSectionEnum>(studentAbsentlist[0].StuSection);
-            var tenure = EnumUtil.ParseEnum<TenureYear>(studentAbsentlist[0].Tyear);
+        //    var sclass = EnumUtil.ParseEnum<SClass>(studentAbsentlist[0].StuClass);
+        //    var ssection = EnumUtil.ParseEnum<SSectionEnum>(studentAbsentlist[0].StuSection);
+        //    var tenure = EnumUtil.ParseEnum<TenureYear>(studentAbsentlist[0].Tyear);
 
-            // All registered Student who is sam class section and tenure
-            var allRegisterdStudent = _context.StudentRegs.Where(s => s.SchoolProfileId == crusr &&
-                                                s.TenureYear == tenure &&
-                                                s.StuClass == sclass &&
-                                                s.StuSection == ssection);
+        //    // All registered Student who is sam class section and tenure
+        //    var allRegisterdStudent = _context.StudentRegs.Where(s => s.SchoolProfileId == crusr &&
+        //                                        s.TenureYear == tenure &&
+        //                                        s.StuClass == sclass &&
+        //                                        s.StuSection == ssection);
 
-            //Creating list of Id
-            var tempIdList = studentAbsentlist.Select(q => q.Id).ToList();
+        //    //Creating list of Id
+        //    var tempIdList = studentAbsentlist.Select(q => q.Id).ToList();
 
-            // All Absent Students list Which id is not present in tempList id
-            var studentPresentlist = allRegisterdStudent.Where(q => !tempIdList.Contains(q.RegId));
+        //    // All Absent Students list Which id is not present in tempList id
+        //    var studentPresentlist = allRegisterdStudent.Where(q => !tempIdList.Contains(q.RegId));
 
-            var attendanceModel = _context.StuAttendances.Where(a => a.SchoolProfileId == crusr);
+        //    var attendanceModel = _context.StuAttendances.Where(a => a.SchoolProfileId == crusr);
 
-            List<StuAttendance> attendanceList = null;
-            foreach (var absentStudent in studentAbsentlist)
-            {
+        //    List<StuAttendance> attendanceList = null;
+        //    foreach (var absentStudent in studentAbsentlist)
+        //    {
 
-                if (attendanceModel.Any(a => a.PresentDate == pdate && a.StudentRegId == absentStudent.Id))
-                {
-                    StuAttendance st = attendanceModel.First(a => a.PresentDate == pdate && a.StudentRegId == absentStudent.Id);
-                    st.IsPresent = false;
-                    //   attendanceList.Add(st);
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    var sa = new StuAttendance();
-                    sa.IsPresent = false;
-                    sa.PresentDate = pdate;
-                    sa.SchoolProfileId = crusr;
-                    sa.StudentRegId = absentStudent.Id;
-                    attendanceList.Add(sa);
-                }
-            }
+        //        if (attendanceModel.Any(a => a.PresentDate == pdate && a.StudentRegId == absentStudent.Id))
+        //        {
+        //            StuAttendance st = attendanceModel.First(a => a.PresentDate == pdate && a.StudentRegId == absentStudent.Id);
+        //            st.IsPresent = false;
+        //            //   attendanceList.Add(st);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        else
+        //        {
+        //            var sa = new StuAttendance();
+        //            sa.IsPresent = false;
+        //            sa.PresentDate = pdate;
+        //            sa.SchoolProfileId = crusr;
+        //            sa.StudentRegId = absentStudent.Id;
+        //            attendanceList.Add(sa);
+        //        }
+        //    }
 
-            foreach (var presentStudent in studentPresentlist)
-            {
-                if (attendanceModel.Any(a => a.PresentDate == pdate && a.StudentRegId == presentStudent.RegId))
-                {
-                    StuAttendance st = attendanceModel.First(a => a.PresentDate == pdate && a.StudentRegId == presentStudent.RegId);
-                    st.IsPresent = true;
-                    //   attendanceList.Add(st);
-                    await _context.SaveChangesAsync();
-                }
-                else
-                {
-                    var sa = new StuAttendance();
-                    sa.IsPresent = true;
-                    sa.PresentDate = pdate;
-                    sa.SchoolProfileId = crusr;
-                    sa.StudentRegId = presentStudent.RegId;
-                    attendanceList.Add(sa);
-                }
-            }
+        //    foreach (var presentStudent in studentPresentlist)
+        //    {
+        //        if (attendanceModel.Any(a => a.PresentDate == pdate && a.StudentRegId == presentStudent.RegId))
+        //        {
+        //            StuAttendance st = attendanceModel.First(a => a.PresentDate == pdate && a.StudentRegId == presentStudent.RegId);
+        //            st.IsPresent = true;
+        //            //   attendanceList.Add(st);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        else
+        //        {
+        //            var sa = new StuAttendance();
+        //            sa.IsPresent = true;
+        //            sa.PresentDate = pdate;
+        //            sa.SchoolProfileId = crusr;
+        //            sa.StudentRegId = presentStudent.RegId;
+        //            attendanceList.Add(sa);
+        //        }
+        //    }
 
-            _context.StuAttendances.AddRange(attendanceList);
-            await _context.SaveChangesAsync();
-        }
+        //    _context.StuAttendances.AddRange(attendanceList);
+        //    await _context.SaveChangesAsync();
+        //}
     }
 }

@@ -24,13 +24,7 @@
             <div class="panel-heading">Search particular student or Just check in to Present / Absent</div>
             <div class="panel-body">
                 <div class="col-md-12">
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.TenureYear)
-                            @Html.EnumDropDownListFor(m => m.TenureYear, TenureYear.T2017.ToString(), new {@class = "form-control"})
-                            @Html.ValidationMessageFor(m => m.TenureYear)
-                        </div>
-                    </div>
+
                     <div class="col-md-2">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Stuclass)
@@ -158,8 +152,8 @@
                             width: '23%',
                             inputClass: 'validate[required]'
                         },
-                        TenureName: {
-                            title: 'Session',
+                        RolNo: {
+                            title: 'Roll',
                             width: '23%',
                             inputClass: 'validate[required]'
                         }
@@ -182,6 +176,8 @@
                                         record.Sclass +
                                         '<b> Section:</b>:' +
                                         record.Ssection +
+                                        '<br /><br />:' +
+                                        record.RolNo +
                                         '<br /><br />'
                                     );
                             });
@@ -196,18 +192,16 @@
             $('#LoadRecordsButton')
                 .click(function(e) {
                     e.preventDefault();
-                    var tYear = $('#TenureYear').val();
                     var sClass = $('#Stuclass').val();
                     var sSection = $('#StuSection').val();
 
-                    if (tYear === "" || sClass ==="0" || sSection ==="0") {
-                        alert("Atleast Select 1.Session, 2.Class and 3.Section");
+                    if (sClass ==="0" || sSection ==="0") {
+                        alert("Atleast Select 2.Class and 3.Section");
                         return;
                     }
                     $('#StudentTableContainer')
                         .jtable('load',
                         {
-                            TenureYear: $('#TenureYear').val(),
                             Stuclass: $('#Stuclass').val(),
                             Name: $('#Name').val(),
                             StuSection: $('#StuSection').val()
@@ -272,7 +266,7 @@
                                 $('#msg').html('<div class="failed">Error! Please try again.</div>');
                             }
                         });
-                        console.log(studentIdName);
+                        //console.log(studentIdName);
 
                     } else {
                         //No rows selected

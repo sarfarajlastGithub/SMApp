@@ -14,6 +14,8 @@ namespace SMApp.Web.LIB.Models.StudentEN
 
         public string RegId { get; set; }
 
+        public string RolNo { get; set; }
+
         public ApplicationUser SchoolProfile { get; set; }
 
         [Required]

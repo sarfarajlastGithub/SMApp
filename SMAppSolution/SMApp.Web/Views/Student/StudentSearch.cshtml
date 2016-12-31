@@ -44,7 +44,7 @@
                         </div>
                         <div class="col-sm-6 xs-pt-5">
                             <label>Active</label>
-                            <select class = "form-control" id="IsActive">
+                            <select class="form-control" id="IsActive">
                                 <option selected="selected" value="">All</option>
                                 <option value="True" selected>True</option>
                                 <option value="False">False</option>
@@ -56,12 +56,12 @@
                     <div class="form-group">
                         <div class="col-sm-6">
                             <label>Name</label>
-                            <input type="text" class="form-control" id="txtStuName"/>
+                            <input type="text" class="form-control" id="txtStuName" />
 
                         </div>
                         <div class="col-sm-12">
                             @*<button data-dismiss="modal" id="btnSearch" style="padding:0px 80px 0px;" type="button" class="btn btn-primary btn-xl">Search</button>*@
-                            <input type="button" style="padding-left: 70px; padding-right: 70px; margin-top: 10px; margin-bottom: 20px;" class="btn btn-success btn-xl" value="Search" id="btnSearch"/>
+                            <input type="button" style="padding-left: 70px; padding-right: 70px; margin-top: 10px; margin-bottom: 20px;" class="btn btn-success btn-xl" value="Search" id="btnSearch" />
                         </div>
                         <div>
                             <a class="col-sm-2 btn btn-link" style="margin-left: 15px;" href="/Student/AddStudent">Add New</a>
@@ -79,6 +79,7 @@
                             <th>Name</th>
                             <th>Class</th>
                             <th>Section</th>
+                            <th>Roll</th>
                             <th>Session</th>
                             <th>Active</th>
                             <th></th>
@@ -92,41 +93,44 @@
 </div>
 @section anyscripts {
 
-@Scripts.Render("~/bundles/datatbljs")
+    @Scripts.Render("~/bundles/datatbljs")
     <script>
         $(document).ready(function () {
 
             //jQuery DataTables initialization
-            $('#studentTable').DataTable({
-                "processing": true, // for show processing bar
-                "serverSide": true, // for process on server side
-                "orderMulti": false, // for disable multi column order
-                "dom": '<"top"i>rt<"bottom"lp><"clear">', // for hide default global search box // little confusion? don't worry I explained in the tutorial website
-                "ajax": {
-                    "url": "/student/LoadStudent",
-                    "type": "POST",
-                    "datatype": "json"
-                },
-                "columns": [
-                        { "data": "StudentName", "name": "StudentName", "autoWidth": true }, //index 0
-                        { "data": "StuClassString", "name": "StuClass", "autoWidth": true }, //index 1
-                        { "data": "StuSectionString", "name": "StuSectionString", "autoWidth": true },             //index 2
-                        { "data": "TenureNameString", "name": "TenureNameString", "autoWidth": true },         //index 3
-                        { "data": "IsActive", "name": "IsActive", "autoWidth": true },      //index 4
+            $('#studentTable')
+                .DataTable({
+                    "processing": true, // for show processing bar
+                    "serverSide": true, // for process on server side
+                    "orderMulti": false, // for disable multi column order
+                    "dom": '<"top"i>rt<"bottom"lp><"clear">',
+                    // for hide default global search box // little confusion? don't worry I explained in the tutorial website
+                    "ajax": {
+                        "url": "/student/LoadStudent",
+                        "type": "POST",
+                        "datatype": "json"
+                    },
+                    "columns": [
+                    { "data": "StudentName", "name": "StudentName", "autoWidth": true }, //index 0
+                    { "data": "StuClassString", "name": "StuClass", "autoWidth": true }, //index 1
+                    { "data": "StuSectionString", "name": "StuSectionString", "autoWidth": true }, //index 2
+                    { "data": "RolNo", "name": "RolNo", "autoEidth": true },
+                    { "data": "TenureNameString", "name": "TenureNameString", "autoWidth": true },         //index 3
+                    { "data": "IsActive", "name": "IsActive", "autoWidth": true },      //index 4
 
-                         {
-                             "data": "StudentRegId", "width": "50px", "render": function (data) {
-                                 return '<a class="btn btn-link" href="/student/StudentDetails/' + data + '">Details</a>';
-                             }
-                         },
-                         {
-                             "data": "StudentRegId", "width": "50px", "render": function (data) {
-                                 return '<a class="btn btn-success" href="/student/UpgradeStudent/' + data + '">Upgrade</a>';
-                             }
+                     {
+                         "data": "StudentRegId", "width": "50px", "render": function (data) {
+                             return '<a class="btn btn-link" href="/student/StudentDetails/' + data + '">Details</a>';
                          }
+                     },
+                     {
+                         "data": "StudentRegId", "width": "50px", "render": function (data) {
+                             return '<a class="btn btn-success" href="/student/UpgradeStudent/' + data + '">Upgrade</a>';
+                         }
+                     }
 
-                ]
-            });
+                    ]
+                });
 
             //Apply Custom search on jQuery DataTables here
             var oTable = $('#studentTable').DataTable();
@@ -143,5 +147,5 @@
             });
         });
 
-</script>
+    </script>
 }

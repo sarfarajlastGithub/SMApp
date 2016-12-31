@@ -74,6 +74,7 @@ namespace SMApp.Web.Controllers
             var crid = User.Identity.GetUserId();
             //ClassViewAndUpdateModel vm = new ClassViewAndUpdateModel();
             //vm = GetTenureData();
+            //TenureYear te = EnumUtil.ParseEnum<TenureYear>(model.TenureYearName);
             var context = new AppDbContext();
 
             if (context.TenureTimes.Any(t => t.SchoolProfileId == crid && t.TenureYearName == model.TenureYearName))
@@ -453,6 +454,7 @@ namespace SMApp.Web.Controllers
             vm.SchoolName = model.SchoolName;
             vm.SchoolPhoneNumber = model.SchoolPhoneNumber;
             vm.TotalStudent = model.TotalStudent;
+            vm.IsComplete = true;
             context.SaveChanges();
 
             return RedirectToLocal("AppUserView");
@@ -821,5 +823,7 @@ namespace SMApp.Web.Controllers
             }
         }
         #endregion
+
+
     }
 }

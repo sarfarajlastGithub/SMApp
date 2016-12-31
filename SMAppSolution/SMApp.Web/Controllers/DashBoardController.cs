@@ -16,7 +16,14 @@ namespace SMApp.Web.Controllers
         {
             var profile = new SchoolProfile();
             model.StudentCount = profile.GetTotalStudents();
-
+            if (model.IsProfileComplete)
+            {
+                model.ColorClass = "panel-green";
+            }
+            else
+            {
+                model.ColorClass = "panel-red";
+            }
             return View(model);
         }
 

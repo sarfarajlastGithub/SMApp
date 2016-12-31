@@ -39,7 +39,8 @@ namespace SMApp.Web.Controllers
                     Sclass = s.StudentReg.StuClass.ToString(),
                     Ssection = s.StudentReg.StuSection.ToString(),
                     TenureName = s.StudentReg.TenureYear.ToString(),
-                    Status = GetStatus(s.IsPresent)
+                    Status = GetStatus(s.IsPresent),
+                    RolNo = s.RolNo
                 });
                 return Json(new { Result = "OK", Records = stStudents, TotalRecordCount = studentCount });
             }
@@ -94,12 +95,12 @@ namespace SMApp.Web.Controllers
 
 
         [HttpPost]
-        public JsonResult StudentListByFiter(string name = "", string tenureyear = "", string stuclass = "", string stuSection= "", int jtStartIndex = 0, int jtPageSize = 0, string jtSorting = null)
+        public JsonResult StudentListByFiter(string name = "", string stuclass = "", string stuSection= "", int jtStartIndex = 0, int jtPageSize = 0, string jtSorting = null)
         {
             try
             {
-                var studentCount = _repository.GetStudentCountByFilter(name, tenureyear, stuclass, stuSection);
-                var students = _repository.GetStudentsByFilter(name, tenureyear, stuclass, stuSection, jtStartIndex, jtPageSize, jtSorting);
+                var studentCount = _repository.GetStudentCountByFilter(name, stuclass, stuSection);
+                var students = _repository.GetStudentsByFilter(name, stuclass, stuSection, jtStartIndex, jtPageSize, jtSorting);
 
                 var stStudents = students.Select(s => new ViewnAttendanceVM
                 {
@@ -107,7 +108,8 @@ namespace SMApp.Web.Controllers
                     Name = s.StudentName,
                     Sclass = s.StuClass.ToString(),
                     Ssection = s.StuSection.ToString(),
-                    TenureName = s.TenureYear.ToString()
+                    TenureName = s.TenureYear.ToString(),
+                    RolNo = s.RolNo
                 });
                 return Json(new { Result = "OK", Records = stStudents, TotalRecordCount = studentCount });
             }
