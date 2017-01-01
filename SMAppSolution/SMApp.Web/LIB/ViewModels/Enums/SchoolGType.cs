@@ -4,6 +4,6 @@
     {
         Boys = 1,
         Girls= 2,
-        BoyGirl = 3
+        All = 3
     }
 }

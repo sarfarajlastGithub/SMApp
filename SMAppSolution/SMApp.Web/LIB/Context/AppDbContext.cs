@@ -2,6 +2,7 @@ using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SMApp.Web.LIB.Models.SchoolEN;
 using SMApp.Web.LIB.Models.StudentEN;
+using SMApp.Web.LIB.Models.StudentFeeEN;
 
 namespace SMApp.Web.LIB.Context
 {
@@ -28,5 +29,19 @@ namespace SMApp.Web.LIB.Context
         public DbSet<StudentReg> StudentRegs { get; set; }
 
         public DbSet<StuAttendance> StuAttendances { get; set; }
+
+
+        //For Fee
+        public DbSet<ConseOrFineAmountClass> ConseOrFineAmountClasses { get; set; }
+
+        public DbSet<FeeConsessionOrFineCategory> FeeConsessionOrFineCategories { get; set; }
+
+        public DbSet<FeeMainCategory> FeeMainCategories { get; set; }
+
+        public DbSet<MainFeeAmountClass> MainFeeAmountClasses { get; set; }
+
+        public DbSet<ScheduleFee> ScheduleFees { get; set; }
+
+        public DbSet<StudentWiseFineOrConsession> StudentWiseFineOrConsessions { get; set; }
     }
 }

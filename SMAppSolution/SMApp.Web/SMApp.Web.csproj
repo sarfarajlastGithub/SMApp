@@ -211,6 +211,12 @@
     <Compile Include="LIB\Models\StudentEN\StuAttendance.cs" />
     <Compile Include="LIB\Models\StudentEN\StudentProfile.cs" />
     <Compile Include="LIB\Models\StudentEN\StudentReg.cs" />
+    <Compile Include="LIB\Models\StudentFeeEN\ConseOrFineAmountClass.cs" />
+    <Compile Include="LIB\Models\StudentFeeEN\FeeMainCategory.cs" />
+    <Compile Include="LIB\Models\StudentFeeEN\FeeConsessionOrFineCategory.cs" />
+    <Compile Include="LIB\Models\StudentFeeEN\MainFeeAmountClass.cs" />
+    <Compile Include="LIB\Models\StudentFeeEN\ScheduleFee.cs" />
+    <Compile Include="LIB\Models\StudentFeeEN\StudentWiseFineOrConsession.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\AccountViewModels.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\ClassViewAndUpdateModel.cs" />
     <Compile Include="LIB\ViewModels\AccountVM\GetAppUserInfo.cs" />
@@ -224,7 +230,10 @@
     <Compile Include="LIB\ViewModels\AccountVM\UpdateViewModel.cs" />
     <Compile Include="LIB\ViewModels\DashBoardVM.cs" />
     <Compile Include="LIB\ViewModels\DateTimeConvert.cs" />
+    <Compile Include="LIB\ViewModels\Enums\Cast.cs" />
     <Compile Include="LIB\ViewModels\Enums\City.cs" />
+    <Compile Include="LIB\ViewModels\Enums\DaOrPa.cs" />
+    <Compile Include="LIB\ViewModels\Enums\FeeOrConcession.cs" />
     <Compile Include="LIB\ViewModels\Enums\Gender.cs" />
     <Compile Include="LIB\ViewModels\Enums\Medium.cs" />
     <Compile Include="LIB\ViewModels\Enums\PresentStatus.cs" />
@@ -335,6 +344,10 @@
     <Compile Include="Migrations\201612312251473_ChangeTenuhg.cs" />
     <Compile Include="Migrations\201612312251473_ChangeTenuhg.Designer.cs">
       <DependentUpon>201612312251473_ChangeTenuhg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701012146429_InitStudentFeeModel.cs" />
+    <Compile Include="Migrations\201701012146429_InitStudentFeeModel.Designer.cs">
+      <DependentUpon>201701012146429_InitStudentFeeModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -704,6 +717,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612312251473_ChangeTenuhg.resx">
       <DependentUpon>201612312251473_ChangeTenuhg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701012146429_InitStudentFeeModel.resx">
+      <DependentUpon>201701012146429_InitStudentFeeModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
