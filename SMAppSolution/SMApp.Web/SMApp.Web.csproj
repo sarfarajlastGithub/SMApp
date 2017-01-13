@@ -190,6 +190,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
+    <Compile Include="Controllers\FeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="LIB\ViewModels\Enums\StudentClub.cs" />
     <Compile Include="LIB\ViewModels\Enums\TenureYear.cs" />
     <Compile Include="LIB\ViewModels\EnumUtil.cs" />
+    <Compile Include="LIB\ViewModels\StudentFeeVM\MainFeeCategory.cs" />
     <Compile Include="LIB\ViewModels\StudentVM\RolClass.cs" />
     <Compile Include="LIB\ViewModels\StudentVM\StuAttendanceVM.cs" />
     <Compile Include="LIB\ViewModels\StudentVM\StudentSearchVM.cs" />
@@ -562,6 +564,8 @@
     <Content Include="Scripts\metisMenu.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\ProjectJs\MainFeeCategoryScript.js" />
+    <Content Include="Scripts\ProjectJs\PresentStudentScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -638,6 +642,7 @@
     <Content Include="Scripts\jtable\themes\basic\jtable_basic.less" />
     <Content Include="Views\Attendance\PresentStudent.cshtml" />
     <Content Include="Views\Attendance\ViewAttendance.cshtml" />
+    <Content Include="Views\Fee\MainFeeCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
